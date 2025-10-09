@@ -1,0 +1,188 @@
+2.3, Nhập Xuất Cơ Bản Trong C#
+
+- Ở hầu hết các ngôn ngữ lập trình, khi mới tiếp cận điều đầu tiên chúng ta quan tâm tới đó là làm sao để nhập dữ liệu từ bàn phím và làm sao để xuất dữ liệu ra màn hình. Vậy thì cấu trúc của các lệnh nhập xuất này là gì và sử dụng chúng như thế nào ?
+
+Cấu trúc cơ bản của các lệnh nhập xuất và ý nghĩa của chúng trong C# 
+
++ Trong C# có 5 lệnh dùng để nhập xuất đó là:
+
+- Console.Write(): In giá trị ra màn hình console mà không xuống dòng.
+
+- Console.WriteLine(): In giá trị ra màn hình console và sau đó xuống dòng.
+
+- Console.Read(): Đọc một ký tự từ bàn phím và trả về mã ASCII của ký tự đó.
+
+- Console.ReadLine(): Đọc dữ liệu từ bàn phím cho đến khi nhấn Enter và trả về một chuỗi.
+
+- Console.ReadKey(): Đọc một ký tự từ bàn phím và trả về thông tin về phím đó.
+
+3.1 Console.Write();
+
+- Cú pháp:
+
+Console.Write(<giá trị cần in ra màn hình>);
+
+- Ý nghĩa: In giá trị ra màn hình console. Giá trị này có thể là 1 ký tự, 1 chuỗi, một giá trị có thể chuyển về kiểu chuỗi 
+
+- Ví dụ:
+
+static void Main(string[] args)
+{
+    // In ra màn hình dòng chữ Pi
+    Console.Write("Pi"); 
+
+    // In ra màn hình số 10
+    Console.Write(10); 
+
+    // In ra màn hình số 10.9
+    Console.Write(10.9f); 
+
+    // In ra màn hình chữ true của kiểu dữ liệu bool(sẽ được trình bày chi tiết ở bài 5)
+    Console.Write(true); 
+}
+
+Thực hiện chạy chương trình thì ta thấy màn hình console vừa hiện lên đã tắt luôn. Vậy làm sao để xem được kết quả?
+
+=> Sử dụng mẹo nhỏ để giải quyết:
+
+Ý tưởng: ta sẽ dùng một lệnh nào đó là cho chương trình phải dừng lại đợi mình nhấn một phím bất kỳ mới kết thúc như vậy trước khi chúng ta nhấn một phím bất kỳ thì chúng ta có thể quan sát được kết quả trên màn hình console.
+
+Có 3 lệnh để thực hiện điều này:
+
+Console.Read();
+Console.ReadLine();
+Console.ReadKey();
+
+Chúng ta chỉ cần thêm 1 trong 3 lệnh trên vào cuối chương trình là xong. Ý nghĩa của 3 lệnh trên sẽ được giải thích chi tiết ở phần sau.
+
+3.2 Console.WriteLine();
+
+- Cú pháp:
+
+Console.WriteLine(<giá trị cần in ra màn hình>);
+
+- Ý nghĩa:
+
+Lệnh này cũng tượng tự như Console.Write() nhưng sẽ khác khi in giá trị ra màn hình xong nó sẽ tự động đưa con trỏ xuống dòng. Điều này giúp ta có thể giải quyết được vấn đề đã đặt ra ở phần trên.
+
++ Ngoài ra, để xuống dòng ta còn có nhiều cách khác như:
+
+- Sử dụng ký tự đặc biệt: chúng ta sử dụng ký tự “\n” trong chuỗi in ra màn hình thì trình biên dịch sẽ tự động đổi nó thành ký tự xuống dòng.
+
+=> Như vậy thay vì dùng Console.WriteLine(“Pi”)  ta có thể dùng Console.Write (“Pi\n”)
+
+- Sử dụng lệnh xuống dòng: ta sử dụng thêm 1 lệnh xuống dòng là Environment.NewLine
+
+Như vậy thay vì dùng 2 cách trên ta sẽ viết Console.Write(Environment.NewLine);
+
+Cách này khá dài dòng so với 2 cách trên và cũng rất ít người sử dụng. Hầu hết khi xuống dòng ta sử dụng Console.WriteLine() hoặc “\n”
+
+VD : 
+
+static void Main(string[] args)
+{
+    Console.Write("Pi \n"); // Sử dụng ký tự đặc biệt để xuống dòng
+    Console.WriteLine(5); // Sử dụng lệnh in ra màn hình có xuống dòng
+    Console.Write(6.5f); // In ra giá trị 6.5 nhưng không xuống dòng
+    Console.Write(Environment.NewLine); // sử dụng lệnh xuống dòng
+    Console.Write(true); // In ra giá trị true nhưng không xuống dòng
+            
+    Console.ReadLine();
+}
+
+
+- In ra giá trị của biến
+
+Console.Write("a = " + a); là một cách in ra giá trị của biến a.
+
+Ngoài ra ta cũng có thể chỉ định vị trí in ra giá trị của biến trong chuỗi bằng cú pháp {<số đếm>}.
+
+Ví dụ:
+
+int a = 5; // khai báo biến kiểu nguyên có tên là a và khởi tạo giá trị là 5.
+Console.Write("a = {0}", a); // In ra màn hình giá trị "a = 5".
+
+Cú pháp chung:
+
+Console.Write("{0} {1} {2} {...}", <giá trị 0>, <giá trị 1>, <giá trị 2>, <giá trị n>);
+
+Trong đó:
+
+- <giá trị 0> sẽ được điền tương ứng vào vị trí số 0 tương tự như vậy cho các giá trị còn lại.
+
+Với 2 cách trên ta có thể làm cho code trở nên gọn gàng, trực quan hơn. 
+
+
+3.3 Console.Read();
+
+- Cú pháp:
+
+Console.Read();
+
+- Ý nghĩa:
+
+Đọc 1 ký tự từ bàn phím và trả về kiểu số nguyên là mã ASCII (American Standard Code for Information Interchange - Chuẩn mã trao đổi thông tin Hoa Kỳ, là bộ kí tự và bộ mã kí tự dựa trên bảng chữ cái La Tinh được dùng trong tiếng Anh hiện đại và các ngôn ngữ Tây Âu khác) của ký tự đó.
+
+Chú ý: lệnh này không đọc được các phím chức năng như Ctrl, Shift, Alt, Caps Lock, Tab, . .
+
+
+3.4 Console.ReadLine();
+
+- Cú pháp:
+
+Console.ReadLine();
+
+- Ý nghĩa: Đọc dữ liệu từ bàn phím cho đến khi gặp ký tự xuống dòng thì dừng (Nói cách khác là đọc cho đến khi mình nhấn enter thì dừng) và giá trị đọc được luôn là một chuỗi.
+
+
+3.5 Console.ReadKey();
+
+- Cú pháp:
+
+Console.ReadKey(<tham số kiểu bool>)
+
+- Ý nghĩa:
+
+Lệnh này cũng dùng để đọc một ký tự từ bàn phím nhưng trả về kiểu ConsoleKeyInfo (là một kiểu dữ liệu có cấu trúc được định nghĩa sẵn để chứa những ký tự của bàn phím bao gồm các phím chức năng).
+
+Tham số kiểu bool bao gồm 2 giá trị: true hoặc false. Nếu truyền vào true thì phím được ấn sẽ không hiển thị lên màn hình console mà được đọc ngầm ngược lại thì phím được ấn sẽ hiển thị lên màn hình console. Nếu không truyền tham số vào thì mặc định sẽ là false.
+
+
+static void Main(string[] args)
+{
+    Console.WriteLine("Nhấn một phím và xem kết quả:");
+        
+    // Sử dụng Console.ReadKey() mà không truyền tham số
+    ConsoleKeyInfo keyInfo1 = Console.ReadKey();
+        
+    // Hiển thị ký tự của phím được nhấn
+    Console.WriteLine("\nKý tự của phím được nhấn (không truyền tham số): " + keyInfo1.KeyChar);
+
+    // Sử dụng Console.ReadKey(true) để ẩn hiển thị của phím được nhấn
+    ConsoleKeyInfo keyInfo2 = Console.ReadKey(true);
+        
+    // Hiển thị ký tự của phím được nhấn (ẩn hiển thị)
+    Console.WriteLine("\nKý tự của phím được nhấn (sử dụng true): " + keyInfo2.KeyChar);
+}
+
+
+- Console.ReadKey() được sử dụng mà không có tham số: Khi bạn nhấn một phím, ký tự của phím đó sẽ được hiển thị trên màn hình console.
+
+- Console.ReadKey(true) được sử dụng với tham số true: Khi bạn nhấn một phím, không có gì xuất hiện trên màn hình console, nhưng ký tự của phím được lưu vào biến keyInfo2 và sau đó được hiển thị.
+
+Khi chạy, chương trình sẽ chờ đợi bạn nhấn một phím. Khi bạn nhấn một phím, kết quả của cả hai trường hợp sẽ được hiển thị. Điều này minh họa cách sử dụng tham số của Console.ReadKey() để quyết định xem ký tự của phím được nhấn có hiển thị trên màn hình hay không.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,225 @@
+3.4, Cấu Trúc Lệnh Rẽ Nhánh if else Trong C#
+
+1 Cấu trúc rẽ nhánh là gì? Có mấy loại cấu trúc rẽ nhánh
+
++ Xét 2 mệnh đề sau:
+
+- Mệnh đề 1: “Nếu trời mưa thì đường trơn”.
+
+- Mệnh đề 2: “Nếu bạn rảnh thì đi chơi ngược lại thì thôi”
+
++ Cấu trúc Nếu... thì... hoặc Nếu... thì... ngược lại thì... được gọi là cấu trúc rẽ nhánh.
+
++ Trong hầu hết các ngôn ngữ lập trình đều có loại cấu trúc rẽ nhánh:
+
+- if - else
+
+- switch - case 
+
+Cấu trúc rẽ nhánh if. . . else. . . còn có tên gọi khác là “câu lệnh điều kiện”.
+
+- Cấu trúc if else bao gồm dạng thiếu và dạng đủ
+
++ Dạng thiếu :
+
+- Cú pháp:
+
+if ([Biểu thức điều kiện]) <Câu lệnh thực hiện>
+
++ Trong đó :
+
+- if là từ khóa bắt buộc.
+
+- <Biểu thức điều kiện> là biểu trức dạng boolean (trả về true hoặc false).
+
+- <Câu lệnh thực hiện> là câu lệnh muốn thực hiện nếu <Biểu thức điều kiện> là đúng.
+
++ Ý nghĩa:
+
+- Nếu <Biểu thức điều kiện> trả về true thì thực hiện <Câu lệnh thực hiện> ngược lại thì không làm gì cả.
+
+Ví dụ:
+
+string K = "Pi";
+if (K == "Pi") 
+// Biểu thức điều kiện sử dụng toán tử == đề so sánh xem giá trị biến K có bằng “Pi” hay không. Nếu bằng trả thì trả về true ngược lại thì trả về false.
+
++ Dạng đủ :
+
+- Cú pháp:
+
+if <Biểu thức điều kiện>
+
+    <Câu lệnh thực hiện 1>
+
+else
+
+    <Câu lệnh thực hiện 2>
+
++ Trong đó :
+ 
+- if, else là từ khóa bắt buộc.
+
+- <Biểu thức điều kiện> là biểu trức dạng boolean (trả về true hoặc false).
+
+- <Câu lệnh thực hiện 1> là câu lệnh muốn thực hiện nếu <Biểu thức điều kiện> là đúng.
+
+- <Câu lệnh thực hiện 2> là câu lệnh muốn thực hiện nếu <Biểu thức điều kiện> là sai.
+
++ Ý nghĩa:
+
+- Nếu <Biểu thức điều kiện> trả về true thì thực hiện <Câu lệnh thực hiện 1> ngược lại thì thực hiện <Câu lệnh thực hiện 2>.
+
+Ví dụ:
+
+string K = "Pi";
+
+if (K == "Pi") // Nếu giá trị K bằng “Pi” thì
+    Console.WriteLine("Iu Chi"); // In ra màn hình “Iu Chi”
+
+else // Ngược lại thì
+                Console.WriteLine("Nothing"); // In ra màn hình “Nothing”
+
+- Vì biểu thức điều kiện K == “Pi” là đúng nên màn hình vẫn in ra “Free Nothing”.
+
++ Một số lưu ý khi sử dụng câu lệnh điều kiện :
+
+- <Biểu thức điều kiện> có thể chứa nhiều biểu thức con bên trong và các biểu thức con liên kết với nhau bằng các toán tử quan hệ nhưng tất cả phải trả về kiểu boolean (true hoặc false).
+
+- Nếu muốn thực hiện nhiều câu lệnh thì ta có thể nhóm chúng vào trong cặp ngoặc nhọn {}.
+
+Ví dụ:
+
+if <Biểu thức điều kiện>
+{
+    <Câu lệnh thực hiện>
+}
+
+Hoặc
+
+if <Biểu thức điều kiện>
+{
+    <Câu lệnh thực hiện 1>
+}
+
+else
+{
+    <Câu lệnh thực hiện 2>
+}
+
+- Lời khuyên là cho dù chỉ thực hiện 1 câu lệnh vẫn để trong cặp ngoặc nhọn {} để code rõ ràng, dễ đọc, dễ nâng cấp sữa chữa.
+
+- Trong câu lệnh có thể chứa một câu lệnh điều kiện con nữa. Bạn có thể vận dụng điều này để làm giải quyết những vấn đề phức tạp.
+
+Ví dụ:
+
+if <Biểu thức điều kiện 1>
+{
+    if <Biểu thức điều kiện 2>
+    {
+        <Câu lệnh thực hiện 1>
+    }
+
+    else
+    {
+        <Câu lệnh thực hiện 2>
+    } 
+    <Câu lệnh thực hiện 3>
+}
+
+else
+{
+    if <Biểu thức điều kiện 3>
+    {
+         <Câu lệnh thực hiện 4>
+    }    
+        
+    if <Biểu thức điều kiện 4>
+    {
+         <Câu lệnh thực hiện 5>
+    } 
+    <Câu lệnh thực hiện 6>
+}
+
+Ngoài cấu trúc if... else... cơ bản trên còn có cấu trúc nhỏ khác là if... else if... else. Ví dụ :
+
+
+if <Biểu thức điều kiện 1>
+{
+    <Câu lệnh thực hiện 1> //Thực hiện khi <biểu thức điều kiện 1> đúng
+}
+
+else if <Biểu thức điều kiện 2>
+{
+    <Câu lệnh thực hiện 2> // Thực hiện khi <biểu thức điều kiện 1> sai và <biểu thức điều kiện 2> đúng
+}
+
+else
+{
+     <Câu lệnh thực hiện 3> //Thực hiện khi cả 2 biểu thức điều kiện trên đều sai (các trường hợp còn lại)
+}
+
++ Có thể hiểu ngắn gọn là “Nếu... thì... Ngược lại, nếu... thì... Trường hợp khác...”.
+
++ Các biểu thức điều kiện được kiểm tra từ trên xuống dưới và không kiểm tra lại.
+
++ Nếu biểu thức điều kiện đang kiểm tra trả về true thì :
+
+- Thực hiện khối lệnh bên trong nó.
+
+- Thoát ra khỏi cấu trúc.
+
+- Không kiểm tra các biểu thức điều kiện còn lại.
+
++ So với toán tử 3 ngôi thì :
+
+- Câu lệnh điều kiện nhìn trực quan hơn và có thể thực hiện nhiều câu lệnh hơn.
+
+- Nhưng nếu chỉ thực hiện 1 câu lệnh điều kiện đơn giản thì dùng toán tử 3 ngôi sẽ làm cho code ngắn gọn và viết nhanh hơn.
+
+Ví dụ chương trình sử dụng cấu trúc if else : Viết chương trình giải phương trình bậc 1: Ax + B = 0.
+
+string strA, strB;
+int A, B;
+double Nghiem;
+
+Console.Write(" Nhap so A: ");
+strA = Console.ReadLine();
+Console.Write(" Nhap so B: ");
+strB = Console.ReadLine();
+
+if (int.TryParse(strA, out A) == false || int.TryParse(strB, out B) == false) // kiểm tra người dùng có thực sự nhập số nguyên vào hay không. Nếu ép kiểu thành công sẽ trả về true, ngược lại trả về false
+{
+    Console.WriteLine(" Du lieu nhap sai !"); 
+    return; // Lệnh này tạm hiểu là dừng và thoát chương trình mà không thực hiện những câu lệnh sau nó nữa. Sẽ được tìm hiểu chi tiết trong bài 16 Hàm
+}
+else
+{
+    Console.WriteLine("\n Phuong trinh cua ban vua nhap la: {0}x + {1} = 0", A, B);
+
+    if (A == 0)
+    {
+        Console.WriteLine("\n Phuong trinh co vo so nghiem !");
+    }
+    else if (B == 0)
+    {
+        Console.WriteLine("\n Phuong trinh co nghiem x = 0");
+    }
+    else
+    {
+        Nghiem = (double)-B / A; // Ép kiểu để cho ra kết quả chính xác
+        Console.WriteLine("\n Phuong trinh co nghiem x = {0}", Nghiem);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

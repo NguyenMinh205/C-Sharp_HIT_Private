@@ -1,0 +1,306 @@
+4.4, Kiểu Chuỗi string Trong C#
+
+1 Lớp String trong C#
+
+- String là một kiểu dữ liệu tham chiếu được dùng để lưu trữ chuỗi ký tự. Vì là một kiểu dữ liệu nên cách khai báo và sử dụng hoàn toàn tương tự các kiểu dữ liệu khác.
+
+- Hôm nay mình sẽ đi sâu vào các thuộc tính và phương thức mà lớp String hỗ trợ.
+
++ Thuộc tính trong lớp String :
+
+- Length : Trả về 1 số nguyên kiểu int là độ dài của chuỗi
+
++ Một số phương thức thường dùng trong lớp String :
+
+- String.Compare(string a, string b); : So sánh 2 chuỗi a và b có bằng nhau hay không. Nếu bằng nhau thì trả về 0, nếu a > b thì trả về 1, a < b thì trả về -1
+
+- String.Concat(string a, string b); : Nối 2 chuỗi a và b thành 1 chuỗi, tương tự như phép cộng chuỗi bằng toán tử '+'
+
+- IndexOf(char c); : Trả về 1 số nguyên kiểu int là vị trí xuất hiện đầu tiên của ký tự c có trong chuỗi. Nếu như không tìm thấy thì phương thức này sẽ trả về -1
+
+- Insert(int StartIndex, string s); : Trả về 1 chuỗi mới trong đó bao gồm chuỗi cũ đã chèn thêm chuỗi s bắt đầu từ vị trí StartIndex
+
+- String.IsNullOrEmpty(string s); : Kiểm tra chuỗi s có phải là chuỗi null hoặc chuỗi rỗng không, nếu đúng thì trả về true, sai thì trả về false
+
+- LastIndexOf(char c); : Trả về 1 số nguyên kiểu int là vị trí xuất hiện cuối cùng của ký tự c có trong chuỗi. Nếu như không tìm thấy thì phương thức này sẽ trả về -1
+
+- Remove(int StartIndex, int count); : Trả về 1 chuỗi mới sau khi đã xoá đi count ký tự bắt đầu từ vị trí StartIndex
+
+- Replace(char oldc, char newc); : Trả về 1 chuỗi mới sau khi đã thay thế tất cả các ký tự oldc bằng các ký tự newc
+
+- Split(char c); : Trả về 1 mảng các chuỗi được cắt ra từ chuỗi ban đầu tại những nơi có ký tự c. Ta có thể truyền vào nhiều ký tự khác nhau, khi đó phương thức sẽ thực hiện cắt theo từng ký tự đã truyền vào 
+
+- Substring(int StartIndex, int length); : Trả về 1 chuỗi mới được cắt từ chuỗi ban đầu từ vị trí StartIndex với số ký tự cắt là length. Nếu ta gọi Substring mà chỉ truyền vào StartIndex thì máy tính sẽ cắt từ vị trí StartIndex đến cuối chuỗi
+
++ Lưu ý :
+
+- Các phương thức có ghi String phía trước là các phương thức gọi thông qua tên lớp. Các phương thức còn lại được gọi thông qua đối tượng.
+
+- Các phương thức khi gọi sẽ tạo ra đối tượng mới rồi thao tác trên đối tượng đó chứ không thao tác trực tiếp với đối tượng đang xét. Vì thế nếu như các bạn gọi
+
+string a = "Pi";
+
+a.Substring(3, 1);
+
+- Thì biến a sau khi thực hiện lệnh Substring vẫn mang giá trị là “Pi” .
+
+- Nếu muốn biến a mang giá trị mới khi thực hiện Substring thì bạn phải gán ngược lại giá trị mới đó cho biến a:
+
+a = a.Substring(3, 1);
+
+- Bạn có thể xem 1 chuỗi là 1 mảng các ký tự. Như vậy ta hoàn toàn có thể truy xuất đến từng ký tự như truy xuất đền phần tử của mảng
+
++ Ứng dụng lớp String vào việc xử lý chuỗi :
+
+- Để hiểu rõ cách sử dụng các phương thức trên. Chúng ta cùng thực hiện chuẩn hoá một chuỗi họ tên của người dùng với các yêu cầu:
+
+- Cắt bỏ hết các khoảng trắng dư ở đầu cuối chuỗi. Các từ cách nhau một khoảng trắng nếu phát hiện có nhiều hơn 1 khoảng trắng thì thực hiện cắt bỏ.
+
+- Viết hoa chữ cái đầu tiên của mỗi từ, các chữ cái tiếp theo thì viết thường.
+
++ Ý tưởng:
+
+- Cắt khoảng trắng dư ở đầu và cuối chuỗi thì ta có thể sử dụng phương thức Trim.
+
+- Khoảng trắng ở giữa thì ta sẽ duyệt cả chuỗi nếu phát hiện có 2 khoảng trắng thì thay thế nó bằng 1 một khoảng trắng. Để làm điều này ta có thể dùng: IndexOf để phát hiện khoảng trắng và Replace để thay thế 2 khoảng trắng thành 1 khoảng trắng.
+
+- Viết hoa chữ cái đầu và viết thường các chữ cái còn lại thì ta có thể cắt chuỗi họ tên ra thành các từ và ứng với mỗi từ ta thực hiện như yêu cầu đề bài. Để làm điều này ta có thể sử dụng: Split để cắt ra các từ và Substring để cắt ra các chữ cái mong muốn, ToUpper để viết hoa và ToLower để viết thường.
+
+Bây giờ các bạn hãy làm thử trước khi xem code tham khảo của mình nào!
+
+Sau đây là code tham khảo để giải quyết các vấn đề trên:
+
+
+/*
+* Khai báo 1 biến kiểu chuỗi tên là FullName
+* Khai báo 1 biến Result chứa kết quả chuẩn hoá chuỗi.
+* Giá trị biến FullName được nhập từ bàn phím.
+*/
+
+string FullName;
+string Result = "";
+
+Console.Write(" Moi ban nhap ho va ten: ");
+FullName = Console.ReadLine();
+
+/* Cắt các khoảng trắng dư ở đầu và cuối chuỗi */
+FullName = FullName.Trim();
+
+/* 
+* Trong khi còn tìm thấy 2 khoảng trắng
+* thì thực hiện thay thế 2 khoảng trắng bằng 1 khoảng trắng
+*/
+            
+while (FullName.IndexOf("  ") != -1)
+{
+    FullName = FullName.Replace("  ", " ");
+}
+            
+/*
+* Cắt chuỗi họ tên ra thành mảng các từ.
+* Sau đó duyệt mảng để chuẩn hoá từng từ một.
+* Khi duyệt mỗi từ ta thực hiện cắt ra chữ cái đầu trên và lưu trong biến FirstChar
+* Cắt các chữ cái còn lại và lưu trong biến OtherChar.
+* Thực hiện viết hoa chữ cái đầu và viết thường các chữ cái còn lại.
+* Cuối cùng là lưu chữ vừa chuẩn hoá vào biến Result.
+*/
+            
+string[] SubName = FullName.Split(' ');
+
+for (int i = 0; i < SubName.Length; i++)
+{
+    string FirstChar = SubName[i].Substring(0, 1);
+    string OtherChar = SubName[i].Substring(1);
+    SubName[i] = FirstChar.ToUpper() + OtherChar.ToLower();
+    Result += SubName[i] + " ";
+}
+
+Console.WriteLine(" Ho ten cua ban la: " + Result);
+
+
+Trong code mình đã chú thích rất rõ ý nghĩa của từng đoạn lệnh, các bạn xem qua để hiểu hơn. Ở đoạn:
+
+for (int i = 0; i < SubName.Length; i++)
+{
+    string FirstChar = SubName[i].Substring(0, 1);
+    string OtherChar = SubName[i].Substring(1);
+    SubName[i] = FirstChar.ToUpper() + OtherChar.ToLower();
+    Result += SubName[i] + " ";
+ }
+
+Chúng ta có thể viết gọn lại thành:
+
+for (int i = 0; i < SubName.Length; i++)
+{
+    SubName[i] = SubName[i].Substring(0, 1).ToUpper() + SubName[i].Substring(1).ToLower();
+    Result += SubName[i] + " ";
+}
+
+- Nhưng viết như vậy đôi khi gây khó hiểu cho những bạn mới bắt đầu nên mình cố tình viết tường minh để các bạn dễ hiểu hơn. 
+
+- Chương trình trên vẫn còn 1 lỗi nhỏ đó là nếu như bạn không nhấn phím space để tạo khoảng trắng mà nhấn phím Tab thì chương trình sẽ không ra kết quả như ý. Các bạn hãy thử vận dụng kiến thức đã học để giải quyết xem sao nhé!
+
+2 Lớp StringBuilder trong C#
+
++ Đặc điểm :
+
+- Lớp StringBuilder được .NET xây dựng sẵn giúp chúng ta thao tác trực tiếp với chuỗi gốc và giúp tiết kiệm bộ nhớ hơn so với lớp String.
+
++ Đặc điểm của StringBuilder là:
+
+- Cho phép thao tác trực tiếp trên chuỗi ban đầu.
+
+- Có khả năng tự mở rộng vùng nhớ khi cần thiết.
+
+- Không cho phép lớp khác kế thừa.
+
+- Từ 2 đặc điểm này đã làm nổi bật lên ưu điểm của StringBuilder so với String đó là ít tốn bộ nhớ. Cụ thể qua ví dụ sau:           
+
+string Value = "Chi";
+Value = Value + "Pi";
+
++ Ở 2 dòng lệnh ta có thể thấy bộ nhớ sẽ được lưu trữ như sau:
+
+- Đầu tiên tạo 1 vùng nhớ lưu đối tượng kiểu string tên là Value.
+
+- Tạo 1 vùng nhớ chứa giá trị “Pi”.
+
+- Khi thực hiện toán tử cộng trên 2 chuỗi sẽ tạo ra 1 vùng nhớ nữa để chứa giá trị chuỗi mới sau khi cộng.
+
+- Cuối cùng là phép gán sẽ thực hiện trỏ đối tượng Value sang vùng nhớ chứa chuỗi kết quả của phép cộng.
+
+=> Như vậy ta thấy sẽ có 1 vùng nhớ không sử dụng nhưng vẫn còn nằm trong bộ nhớ, đó là vùng nhớ chứa giá trị “Chi” – giá trị ban đầu của biến Value.
+
++ Đối với StringBuilder thì khác :
+
+StringBuilder MutableValue = new StringBuilder("Chi");
+MutableValue.Append("Pi");
+
++ Ở 2 câu lệnh trên bộ nhớ sẽ lưu trữ như sau :
+
+- Tạo một vùng nhớ cho đối tượng MutableValue chứa giá trị “Chi”.
+
+- Tạo một vùng nhớ chứa giá trị “Pi”.
+
+- Mở rộng vùng nhớ của MutableValue để nối chuỗi “Pi” vào sau chuỗi “Chi”.
+
+- Rõ ràng là ta không tạo ra quá nhiều vùng nhớ và cũng không lãng phí bất cứ vùng nhớ nào.
+
++ Sử dụng :
+
+- Cách khởi tạo 1 đối tượng StringBuilder có đôi chút khác so với String.
+
++ Cú pháp:
+
+- Khởi tạo một đối tượng rỗng :
+
+StringBuilder <tên biến> = new StringBuilder();
+
+- Khởi tạo một đối tượng chứa 1 chuỗi cho trước:
+
+StringBuilder <tên biến> = new StringBuilder(<chuỗi giá trị>);
+
+- Trong lớp StringBuilder có các phương thức như: Remove, Insert, Replace được sử dụng hoàn toàn giống như lớp String.
+
++ Chỉ có vài phương thức mới các bạn cần chú ý :
+
+- Append(string s); : Nối chuỗi s vào chuỗi ban đầu
+
+- Clear(); : Xoá toàn bộ nội dung trong đối tượng (không xoá vùng nhớ của đối tượng)
+
+- ToString() : Chuyển đối đối tượng kiểu StringBuilder sang kiểu String
+
++ Lưu ý:
+
+- Các bạn nhớ đây là đối tượng kiểu StringBuilder nên thao tác với chuỗi như gán, nối chuỗi, . . . phải thông qua các phương thức chứ không thể thực hiện trực tiếp được.
+
++ Giữa String và StringBuilder đều có cái hay riêng của nó. Tuỳ vào từng yêu cầu của bài toán mà nên sử dụng cho hợp lý, tránh lạm dụng quá nhiều 1 kiểu:
+ 
+- Thông thường đối với các bài toán đòi hỏi thao tác nhiều với chuỗi gốc như cộng chuỗi, chèn chuỗi, xoá bỏ một số ký tự, . . . thì nên sử dụng StringBuilder để tối ưu bộ nhớ.
+ 
+- Còn lại thì nên sử dụng String để việc thao tác thuận tiện hơn.
+
+
+Ví dụ về sử dụng chuỗi:
+
+- Chuẩn hoá chuỗi:
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string s = Console.ReadLine();
+        s = s.Trim();
+        while (s.IndexOf("  ") != -1)
+        {
+            s = s.Remove(s.IndexOf("  "), 1);
+        }
+        Console.WriteLine("Chuoi sau khi chuan hoa la : {0}", s);
+    }
+}
+
+
+- Đếm số khoảng trắng:
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string s = Console.ReadLine();
+        int length = s.Length, dem = 0;
+        s += 'a';
+        for (int i = 0; i < length; ++i)
+        {
+            if (s[i] == ' ' && s[i + 1] != ' ')
+            {
+                ++dem;
+            }
+        }
+        Console.WriteLine("So khoang trang trong chuoi vua nhap la : {0}", dem);
+    }
+}
+
+- Đếm số lượng từ của chuỗi: 
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string s = Console.ReadLine();
+        int length = s.Length, dem = 0;
+        s += ' ';
+        for (int i = 0; i < length; ++i)
+        {
+            if (s[i] != ' ' && s[i + 1] == ' ')
+            {
+                ++dem;
+            }
+        }
+        Console.WriteLine("Chuoi {0} co {1} tu", s, dem);
+    }
+}
+
+- In ra các chữ cái của chuỗi: 
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string[] s = Console.ReadLine().Split(' ');
+        for (char c = s[0][0]; c <= s[1][0]; ++c)
+        {
+            Console.Write("{0} ", c.ToString().ToUpper());
+        }
+        Console.ReadKey();
+    }
+}
+
+
+
+
+
+
+
+
+
+

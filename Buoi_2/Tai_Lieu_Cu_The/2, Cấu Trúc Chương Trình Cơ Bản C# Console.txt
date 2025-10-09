@@ -1,0 +1,207 @@
+2.2, Cấu Trúc Chương Trìnhh Cơ Bản C# Console
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Cau_Truc_Lenh_Co_Ban
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+    }
+}
+
+Đây chính là cấu trúc cơ bản của một chương trình C# trên nền Console được công cụ hỗ trợ tạo sẵn. Sau đây chúng ta sẽ cùng tìm hiểu từng thành phần của chương trình trên.
+
+2.1 Using
+
+- Cú pháp: 
+
+using <tên thư viện>
+
+- Ý nghĩa :
+
+Thư viện là một tập các phương thức, kiểu dữ liệu nào đó được tạo ra nhằm hỗ trợ cho việc lập trình nhanh chóng hiệu quả hơn. Lệnh Using dùng để chỉ cho trình biên dịch biết rằng những thư viện được sử dụng trong chương trình. Các bạn hoàn toàn có thể không sử dụng thư viện nào trong chương trình của mình.
+
+Ví dụ: Khai báo một số thư viện :
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+2.2 Namespace
+
+- Cú pháp:
+
+namespace <tên namespace>
+
+{
+
+// Các thành phần bên trong namespace bao gồm các lớp, enum, delegate hoặc các namespace con
+
+}
+
+- Ý nghĩa: báo cho trình biên dịch biết rằng các thành phần bên trong khối { } ngay bên dưới tên namespace thuộc vào chính namespace đó. 
+
+ Ví dụ về namespace:
+
+namespace Cau_Truc_Lenh_Co_Ban
+{
+    public class Action {}
+
+    public delegate void Art();
+
+    namespace Sub_Namespace {}
+}
+
+- Với khai báo trên thì ta thấy các thành phần trong namespace Cau_Truc_Lenh_Co_Ban sẽ thuộc namespace Cau_Truc_Lenh_Co_Ban.
+
+2.3 Class
+
+- Cú pháp:
+
+class <Tên lớp> { }
+
+- Ý nghĩa: báo cho trình biên dịch biết rằng những thành phần trong khối { } ngay sau tên lớp thuộc vào chính lớp đó. 
+
+- Ví dụ về lớp:
+
+class Program
+{
+    static void Main(string[] args)
+    {
+
+    }
+}
+
+Dễ thấy phương thức Main này nằm trong khối { } của lớp Program nên phương thức này thuộc lớp Program.
+
+
+2.4 Hàm (Phương thức) Main
+
+Đây là hàm được tạo sẵn khi tạo project với cấu trúc như sau:
+
+static void Main(string[] args) { }
+
+Hàm chính của toàn chương trình. Mỗi khi trình biên dịch dịch chương trình ra sẽ đi vào hàm Main đầu tiên để bắt đầu vòng đời của chương trình. Từ thời điểm này chúng ta sẽ viết code (mã chương trình) bên trong khối { } của hàm Main.
+
+2.5 Comment
+
+- Khi viết code nhu cầu chú thích ý nghĩa đoạn code cũng rất thiết thực.
+
+- Đôi khi bạn không nhớ đoạn code mình viết ra dùng để làm gì. Thì chú thích lại ý nghĩa của nó cũng rất cần thiết. Hay bạn có thể đóng đoạn code không dùng tới mà không cần xóa nó đi. Khi nào cần sử dụng thì lại mở nó ra xài lại.
+
+- Chúng ta hãy cùng tìm hiểu về comment nhé!
+
+using System;
+
+// Commnet không được biên dịch khi dịch chương trình
+namespace Cau_Truc_Lenh_Co_Ban
+{
+    /// <summary>
+    /// Comment cho class
+    /// </summary>
+    class Program
+    {
+        /// <summary>
+        /// Comment cho hàm
+        /// </summary>
+        /// <param name="args"></param>
+
+        static void Main(string[] args)
+        {
+            // Comment cho 1 dòng
+            Console.Write("Pi");    // Hoàn toàn có thể comment như thế này.
+
+            Console //à há .WriteLine("Test comment") cái này lỗi xóa dòng này sẽ chạy được;
+
+            Console.ReadKey(/*haha đoạn comment này không được biên dịch*/);  
+
+            /*Comment*/
+            /*
+             * Hay như thế này
+             */
+
+        }   // đoạn code/chữ bạn viết phía sau dấu // sẽ không được biên dịch. Nhưng đoạn code phía trước đó vẫn được biên dịch bình thường
+    }    
+}
+
+Có 3 cách để comment code trong Visual Studio:
+
++ Sử dụng ký tự //
+
+- Bất kỳ đoạn code hay chữ nào phía sau ký tự // cũng sẽ không được biên dịch.
+
+// Comment cho 1 dòngConsole.Write("Pi");    // Hoàn toàn có thể comment như thế này
+
+- Nhưng với cách comment như thế này thì sẽ không được. Đoạn code không còn hoàn chỉnh, biến thành comment vì nằm phía sau ký tự //, VD :
+
+Console //à há .WriteLine("Test comment");
+
+- Sau dòng //,  dòng tiếp theo sẽ không còn là dòng comment nữa.
+
+// Comment cho 1 dòngConsole.Write("Pi");
+
++ Sử dụng ký tự /**/
+
+- Vậy nếu vẫn muốn comment nhưng comment giữa đoạn code. Hay các dòng comment khác sẽ liên tiếp nhau dễ đọc hơn. Thì chúng ta cùng tìm hiểu ký tự comment tiếp theo /**/.
+
+- Bất kỳ đoạn code hay chữ nào nằm trong khối /**/ đều tính là comment. Mỗi khi xuống dòng thì vẫn là comment, VD :
+
+Console.ReadKey(/*haha đoạn comment này không được biên dịch*/);  /*Comment*/ /** Hay như thế này*/
+
++ Sử dụng ký tự ///
+
+- Thêm 1 cách comment code để tiện sử dụng nữa là ký tự ///. Bạn gõ ký tự này ở phía trên namespace, class, method thì Visual Studio sẽ tự động sinh ra cho bạn 1 đoạn comment như sau:
+
+/// <summary>/// Bạn có thể ghi bất kỳ trong nơi này/// </summary>/// <param name="args"></param>
+
+- Bạn cũng có thể comment với ký tự /// tương tự ký tự //. Nhưng có vẻ không được đẹp mắt nhỉ?
+
+
+2.6 Dấu chấm phẩy (;)
+
+- Có một điểm cần lưu ý khi viết code. Mỗi khi kết thúc một dòng lệnh. Chúng ta sẽ viết thêm 1 dấu ; ngay phía sau đoạn code đó để báo hiệu chúng ta đã kết thúc dòng lệnh hiện tại.
+
+- Bạn hoàn toàn có thể viết tiếp dòng lệnh tiếp theo ngay trên cùng 1 hàng với dòng lệnh cũ. Nhưng  khuyến cáo nên để code rõ ràng.
+
+Console.Write("Pi"); // dấu ; ngay cuối dòng lệnh
+Console.Write("Pi"); Console.ReadKey(); // không nên viết nhiều đoạn code trên 1 hàng như vậy
+
+- Mỗi dòng code là 1 hàng.
+
+- Các đoạn code con thì để trong khối lệnh { }.
+
+2.7 Ví dụ chương trình đầu tiên trong C#
+
+- Đầu tiên, các bạn tạo một project mới và nhập đoạn code sau vào:
+
+using System;
+
+namespace Cau_Truc_Lenh_Co_Ban
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Chung ta la em anh Pi");
+            Console.ReadKey();
+        }
+    }
+}
+
+
+Ta được kết quả là Chúng ta là em anh Pi trên màn hình Console :3
+
+
+
+

@@ -1,0 +1,86 @@
+3.2, Hằng Trong C#
+
+Hằng là gì? Tại sao phải có hằng?
+
+1 Khái niệm về hằng:
+
+- Là một biến những giá trị không thay đổi trong suốt chương trình.
+
+- Bắt buộc phải khởi tạo giá trị khi khai báo.
+
+2 Tại sao phải có hằng?
+
+- Để ngăn chặn việc gán giá trị khác vào biến.
+
+- Hằng làm cho chương trình dễ đọc hơn bằng cách biến những con số vô cảm thành những tên có nghĩa.
+
+- Hằng giúp cho chương trình dễ nâng cấp, dễ sửa chữa hơn.
+
+- Hằng giúp cho việc tránh lỗi dễ dàng hơn. Nếu bạn vô ý gán giá trị cho một biến hằng ở đâu thì trình biên dịch sẽ báo lỗi ngay lập tức.
+
+3 Các loại hằng? Ý nghĩa và cách sử dụng
+
++ Trong C#, hằng được chia làm 3 loại:
+
+- Giá trị hằng.
+
+- Biểu tượng hằng.
+
+- Kiểu liệt kê.
+
+3.1 Giá trị hằng
+
+- Ta có câu lệnh gán sau: x = 10;
+
+- Giá trị 10 là giá trị hằng.
+ 
+- Giá trị 10 luôn là 10 và ta không thể gán giá trị khác cho 10 được.
+
+3.2 Biểu tượng hằng
+
+- Việc gán một tên cho giá trị hằng được xem là một biểu tượng hằng.
+
+- Xét lại câu lệnh: x = 10; thì x được xem là biểu tượng hằng.
+
+- Cú pháp để tạo một biểu tượng hằng:
+
+const <kiểu dữ liệu> <tên biến> = <giá trị hằng>;
+
++ Có thể thấy cú pháp này khá giống với cú pháp khai báo nhưng có 2 điểm các bạn cần lưu ý:
+
+- Phải có từ khóa const phía trước khai báo.
+
+- Phải khởi tạo giá trị ngay tại khai báo.
+
+3.3 Kiểu liệt kê (enum)
+
+- Kiểu liệt kê là tập hợp các tên hằng có giá trị không thay đổi
+
++ Cách sử dụng hằng : 
+
+- Vì bản chất hằng cũng là một biến nhưng giá trị không thay đổi nên hằng được sử dụng tương tự như biến
+
++ Một số lưu ý khi sử dụng hằng:
+
+- Hằng bắt buộc phải được khởi tạo giá trị ngay khi khai báo và không được thay đổi giá trị trong suốt chương trình.
+
+- Giá trị của hằng được tính toán vào lúc biên dịch nên không thể gán trực tiếp giá trị của biến vào hằng. Nếu muốn làm điều đó thì phải sử dụng từ khóa readonly trước khai báo biến (readonly là từ khóa chỉ cho trình biên dịch biết rằng biến này chỉ được đọc, lấy giá trị chứ không được gán giá trị)
+
+- Hằng bao giờ cũng static nhưng ta không được đưa từ khóa này vào khai báo hằng. Vì biến static chỉ được khởi tạo một lần và giữ giá trị của nó giữa các lần gọi hàm. Nó tồn tại trong suốt thời gian chạy của chương trình và không bị hủy khi hàm kết thúc. Vì vậy từ khóa static không được sử dụng khi khai báo hằng, bởi vì hằng đã có tính chất không thay đổi theo mặc định. Nó không cần được gán từ khóa static để đảm bảo tính chất không thay đổi của nó.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,179 @@
+2.5, Kiểu dữ liệu trong C#
+
++ Kiểu dữ liệu:
+
+- Là tập hợp các nhóm dữ liệu có cùng đặc tính, cách lưu trữ và thao tác xử lý trên trường dữ liệu đó.
+
+- Là một tín hiệu để trình biên dịch nhận biết kích thước của một biến (ví dụ như int là 4 bytes) và khả năng lưu trữ của nó (ví dụ biến kiểu int chỉ có thể chứa được các số nguyên).
+
+- Là thành phần cốt lõi của một ngôn ngữ lập trình.
+
++ Tại sao phải có kiểu dữ liệu?
+
+- Như trong định nghĩa đã trình bày, phải có kiểu dữ liệu để nhận biết kích thước và khả năng lưu trữ của một biến.
+
+- Nhằm mục đích phân loại dữ liệu. Nếu như không có kiểu dữ liệu ta rất khó xử lý vì không biết biến này kiểu chuỗi hay kiểu số nguyên hay kiểu số thực, . . .
+
+
+	 Phân loại kiểu dữ liệu
+
++ Trong C#, kiểu dữ liệu được chia thành 2 tập hợp kiểu dữ liệu chính:
+
+- Kiểu dữ liệu dựng sẵn (built - in) mà ngôn ngữ cung cấp.
+
+- Kiểu dữ liệu do người dùng định nghĩa (user - defined).
+
++ Mỗi tập hợp kiểu dữ liệu trên lại phân thành 2 loại:
+
+- Kiểu dữ liệu giá trị (value): Một biến khi khai báo kiểu dữ liệu giá trị thì vùng nhớ của biến đó sẽ chứa giá trị của dữ liệu và được lưu trữ trong vùng nhớ Stack (vùng nhớ do máy tính quản lý, tự động giải phóng khi không cần nữa).
+
+Một số kiểu dữ liệu thuộc kiểu giá trị: bool, byte, char, decimal, double, enum, float, int, long, sbyte, short, struct, uint, ulong, ushort,...
+
+- Kiểu dữ liệu tham chiếu (reference): Một biến khi khai báo kiểu dữ liệu tham chiếu thì vùng nhớ của biến đó chỉ chứa địa chỉ của đối tượng dữ liệu và lưu trong vùng nhớ Stack.
+
+Đối tượng dữ liệu thực sự được lưu trong vùng nhớ Heap (vùng nhớ do người dùng tự quản lý, không tự động giải phóng như vùng nhớ Stack)
+
+Một số kiểu dữ liệu thuộc kiểu tham chiếu: object, dynamic, string và tất cả các kiểu dữ liệu do người dùng định nghĩa. 
+
++ Bộ nhớ Stack và bộ nhớ Heap: Cả hai đều là bộ nhớ trên RAM nhưng cách tổ chức, quản lý dữ liệu cũng như sử dụng thì rất khác nhau:
+
++ Vùng nhớ Stack : 
+
+- Vùng nhớ được cấp phát khi chương trình biên dịch.
+
+- Được sử dụng cho việc thực thi thread, khi gọi hàm, các biến cục bộ kiểu giá trị và tự động giải phóng khi không còn sử dụng nữa.
+
+- Kích thước vùng nhớ Stack là cố định và chúng ta không thể thay đổi.
+
+- Khi vùng nhớ này không còn đủ dùng thì sẽ gây ra hiện tượng tràn bộ nhớ (stack overflow). Hiện tượng này xảy ra khi nhiều hàm lồng vào nhau hoặc gọi đệ quy nhiều lần dẫn đến không đủ vùng nhớ.
+
++ Vùng nhớ Heap :
+
+- Vùng nhớ được cấp phát khi chạy chương trình.
+
+- Vùng nhớ Heap được dùng cho cấp phát bộ nhớ động
+
+- Bình thường vùng nhớ trong Heap do người dùng tự giải phóng nhưng trong C# điều này được hỗ trợ mạnh mẽ bởi bộ tự động thu gom rác (Garbage Collection). Vì thế việc giải phóng vùng nhớ sẽ được thực hiện tự động. Đây là 1 ưu điểm lớn của C# so với C và C++.
+
+- Kích thước vùng nhớ Heap có thể thay đổi được. Khi không đủ vùng nhớ để cấp phát thì hệ điều hành sẽ tự động tăng kích thước vùng nhớ Heap lên.
+
+
+Các kiểu dữ liệu cơ bản trong C#
+
++ Kiểu số nguyên : 
+
+- byte, 1 byte : số nguyên dương không dấu có giá trị từ 0 đến 255
+
+- sbyte, 1 byte : số nguyên có dấu có giá trị từ -128 đến 127
+
+- short, 2 bytes : Số nguyên có dấu có giá trị từ -32,768 đến 32,767
+
+- ushort : 2 bytes : Số nguyên không dấu có giá trị từ 0 đến 65,535
+
+- int : 4 bytes : Số nguyên có dấu có giá trị từ -2,147,483,647 đến 2,147,483,647
+
+- uint : 4 bytes : Số nguyên không dấu có giá trị từ 0 đến 4,294,967,295
+
+- long : 8 bytes : Số nguyên có dấu có giá trị từ -9,223,370,036,854,775,808 đến 9,223,370,036,854,775,807
+
+- ulong : 8 bytes : Số nguyên không dấu có giá trị từ 0 đến 18,446,744,073,709,551,615
+
++ Kiểu số thực : 
+
+- float : 4 bytes : Kiểu số thực dấu chấm động có giá trị dao động từ 3.4E – 38 đến 3.4E + 38, với 7 chữ số có nghĩa
+
+- double : 8 bytes : Kiểu số thực dấu chấm động có giá trị dao động từ 3.4E – 38 đến 3.4E + 38, với 7 chữ số có nghĩa
+
+- decimal : 16 bytes : Có độ chính xác đến 28 con số và giá trị thập phân, được dùng trong tính toán tài chính
+
++ Kiểu ký tự : 
+
+- char : 2 bytes : Chứa 1 ký tự thuộc bảng mã Unicode
+
++ Kiểu logic (kiểu luận lý)
+
+- bool : 1 byte : Chứa 1 trong 2 giá trị logic là true hoặc false
+
+
+ Lưu ý khi sử dụng kiểu dữ liệu 
+
+- Khác với những kiểu dữ liệu trên, string là kiểu dữ liệu tham chiếu và dùng để lưu chuỗi ký tự.
+
++ Ý nghĩa của một số kiểu dữ liệu cơ bản:
+
+- Kiểu dữ liệu có miền giá trị lớn hơn sẽ chứa được kiểu dữ liệu có miền giá trị nhỏ hơn. Như vậy biến kiểu dữ liệu nhỏ hơn có thể gán giá trị qua biến kiểu dữ liệu lớn hơn (sẽ được trình bày trong phần tiếp theo).
+
+- Giá trị của kiểu char sẽ nằm trong dấu ‘ ’ (nháy đơn).
+
+- Giá trị của kiểu string sẽ nằm trong dấu “ ” (nháy kép).
+
+- Giá trị của biến kiểu float phải có chữ F hoặc f làm hậu tố.
+
+- Giá trị của biến kiểu decimal phải có chữ m hoặc M làm hậu tố.
+
+- Trừ kiểu string, tất cả kiểu dữ liệu trên đều không được có giá trị null. Null là giá trị rỗng, không tham chiếu đến vùng nhớ nào. Để có thể gán giá trị null cho biến thì ta thêm ký tự ? vào sau tên kiểu dữ liệu là được. Ví dụ: int? hay bool? . . .
+
+- Ví dụ chương trình sử dụng kiểu dữ liệu :
+
+static void Main(string[] args)
+{
+    // Kiểu số nguyên
+    byte BienByte = 10;
+    short BienShort = 10;
+    int BienInt = 10;
+    long BienLong = 10;
+
+    // Kiểu số thực
+    float BienFloat = 10.9f; // Giá trị của biến kiểu float phải có hậu tố f hoặc F. 
+    double BienDouble = 10.9; // Giá trị của biến kiểu double không cần hậu tố.
+    decimal BienDecimal = 10.9m; // Giá trị của biến kiểu decimal phải có hậu tố m.
+
+    // Kiểu ký tự và kiểu chuỗi
+    char BienChar = 'K'; // Giá trị của biến kiểu ký tự nằm trong cặp dấu '' (nháy đơn).
+    string BienString = "Kteam"; // Giá trị của biến kiểu chuỗi nằm trong cặp dấu "" (nháy kép).
+
+    Console.ReadKey();
+}
+
+
+
+Những lỗi cần lưu ý : 
+
+static void Main(string[] args)
+{
+    int a;
+    Console.WriteLine(" a = " + a); // Lỗi vì biến a không thể sử dụng khi chưa có giá trị.
+
+    int b = 10.9; // Lỗi vì b là biến kiểu số nguyên nên không thể nhận giá trị ngoài số nguyên.
+
+    byte c = 1093; // Lỗi vì c là biến kiểu byte mà kiểu byte có miền giá trị từ -128 đến 127 nên không thể nhận giá ngoài vùng này được.
+
+    string d = 'K'; // Lỗi vì không thể gán giá trị ký tự vào biến kiểu chuỗi được mặc dù chuỗi có thể hiểu là tập hợp nhiều ký tự. Có thể sửa bẳng cặp dấu "" thay vì ''. 
+
+    long e = null; // Lỗi vì không thể gán null cho biến kiểu long, int, byte, . . .
+    long? f = null; // Cách khắc phục là thêm dấu ? vào sau kiểu dữ liệu. Lúc này kiểu dữ liệu của f là long?
+
+    int g = 10;
+    byte h = g; // Lỗi vì giá trị của biến có kiểu dữ liệu lớn hơn không thể gán cho biến có kiểu dữ liệu nhỏ hơn mặc dù trong trường hợp này ta thấy số 10 đều có thể gán cho 2 biến.
+
+    string k = "Pi";
+    Console.WriteLine(" k = " + K); // Lỗi vì phía trên khai báo biến k còn khi sử dụng là biến K 
+
+    Console.ReadKey();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

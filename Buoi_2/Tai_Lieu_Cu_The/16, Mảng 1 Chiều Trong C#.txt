@@ -1,0 +1,285 @@
+4.1, Mảng 1 Chiều Trong C#
+
+1 Khái niệm về mảng trong C#. Tại sao phải sử dụng mảng?
+
+1.1 Khái niệm về mảng
+
++ Mảng là :
+
+- Tập hợp các đối tượng có cùng kiểu dữ liệu.
+
+- Mỗi đối tượng trong mảng được gọi là một phần tử.
+
+- Các phần tử phân biệt với nhau bằng chỉ số phần tử. Trong C# chỉ số phần tử là các số nguyên không âm và bắt đầu từ 0 1 2 3…
+
++ Đặc điểm của mảng:
+
+- Các phần tử trong mảng dùng chung một tên và được truy xuất thông qua chỉ số phần tử.
+
+- Một mảng cần có giới hạn số phần tử mà mảng có thể chứa.
+
+- Phải cấp phát vùng nhớ mới có thể sử dụng mảng.
+
+- Vị trí ô nhớ của các phần tử trong mảng được cấp phát liền kề nhau.
+
++ Tại sao phải sử dụng mảng?
+
+- Để trả lời câu hỏi này ta thử xét trường hợp chúng ta cần chứa họ tên của 10 sinh viên trong trường.
+
+- Nếu sử dụng biến bình thường thì ta cần khai báo 10 biến kiểu string để chứa họ tên của 10 sinh viên. Đến đây vẫn chưa có vấn đề gì lớn!
+
+- Nhưng thực tế thì một trường không phải chỉ có 10 sinh viên, nó có thể là 1000 sinh viên, 10000 sinh viên, 30000 sinh viên. 
+
+- Lúc này vấn đề đã xuất hiện, chúng ta không thể khai báo vài nghìn biến kiểu string được vì như vậy code sẽ rất dài dòng, rất khó kiểm soát. Khi đó việc sử dụng mảng để lưu trữ là lựa chọn tốt nhất.
+
++ Những lợi ích khi sử dụng mảng:
+
+- Gom nhóm các đối tượng có chung tính chất lại với nhau giúp code gọn gàng hơn.
+
+- Để thao tác, dễ quản lý, nâng cấp sửa chữa. Vì lúc này việc thay đổi số lượng sinh viên ta chỉ cần thay đổi số phần tử của mảng là được.
+
+- Dễ dàng áp dụng các cấu trúc lặp vào để xử lý dữ liệu.
+
+2 Khai báo, khởi tạo và sử dụng mảng 1 chiều trong C#
+
++ Khai báo mảng 1 chiều :
+
+- Cú pháp:
+
+<kiểu dữ liệu> [] <tên mảng>;
+
++ Trong đó:
+
+- <kiểu dữ liệu> là kiểu dữ liệu của các phần tử trong mảng.
+
+- Cặp dấu [] là ký hiệu cho khai báo mảng 1 chiều.
+
+- <tên mảng> là tên của mảng, cách đặt tên mảng cũng như cách đặt tên biến 
+
++ Để sử dụng được mảng ta phải khởi tạo giá trị hoặc cấp phát vùng nhớ cho mảng. Cấp phát vùng nhớ:
+
+- Được thực hiện thông qua toán tử new 
+
+- Lưu ý là khi cấp phát vùng nhớ cho mảng 1 chiều ta cần chỉ ra số phần tử tối đa của mảng.
+
+Ví dụ:
+
+/*
+* Khai báo mảng 1 chiều kiểu string và có tên là Pi.
+* Sau đó thực hiện cấp phát vùng nhớ với số phần tử tối đa của mảng là 3.
+*/
+
+string[] Pi = new string[3];
+
+- Sau khi mảng được cấp phát vùng nhớ thì các phần tử trong mảng sẽ mang giá trị mặc định:
+
+- Đối với số nguyên là 0
+
+- Đối với số thực là 0.0
+
+- Đối với kiểu ký tự là ‘’ (ký tự rỗng)
+
+- Đối với kiểu tham chiếu là null
+
+- Chúng ta có thể khởi tạo giá trị khác mà chúng ta mong muốn ngay khi cấp phát vùng nhớ bằng cú pháp sau:
+
+<kiểu dữ liệu>[] <tên mảng> = new <kiểu dữ liệu>[] { <giá trị 1>, …, <giá trị n> };
+
+- Các giá trị khởi tạo nằm trong cặp dấu ngoặc ngọn {} và cách nhau bởi dấu phẩy.
+
+- Chúng ta không cần cung cấp số phần tử tối đa mà trình biên dịch sẽ tự đếm xem bạn đã khởi tạo bao nhiêu giá trị và xem nó như số phần tử tối đa. Vì thế dù việc khai báo số phần tử tối đa không lỗi nhưng trong trường hợp này nó không có ý nghĩa lắm!  
+
++ Khởi tạo giá trị
+
+- Cú pháp:
+
+<kiểu dữ liệu>[] <tên mảng> = { <giá trị 1>, …, <giá trị n> };
+
+Ví dụ:
+
+int[] IntArray = { 3, 9, 10 };
+
+- Về bản chất thì cách này trình biên dịch vẫn xem xét số phần tử khởi tạo và cấp phát vùng nhớ cho biến mảng sau đó thực khởi tạo giá trị cho các phần tử trong mảng. Nhưng cách viết này có vẻ nhanh và gọn hơn so với cách cấp phát vùng nhớ rồi mới khởi tạo giá trị.
+
++ Tóm lại ta có 3 cách khai báo và khởi tạo sau:
+
+- Khai báo và cấp phát vùng nhớ :
+
+string[] Array = new string[3];
+
+- Khai báo, cấp phát và khởi tạo giá trị cho mảng :
+
+string[] Pi = new string[] { "Pi", "Chi" };     
+
+- Khởi tạo giá trị cho mảng :
+
+int[] IntArray = { 3, 9, 10 };
+
+
+3 Sử dụng mảng
+
++ Kiểu mảng có thể dùng làm:
+
+- Kiểu dữ liệu cho biến.
+
+- Kiểu trả về cho hàm.
+
+- Tham số truyền vào cho hàm.
+ 
+- Các phần tử của mảng được truy xuất thông qua chỉ số phần tử và cặp dấu []. Có thể xem các phần tử của mảng như là các biến đơn và thao tác như thao tác với biến bình thường.
+
+// Khai báo, cấp phát và khởi tạo mảng kiểu string và tên là Pi
+
+string[] Pi = new string[] { "Pi", "Chi" };
+
+/*
+    Vì chỉ số phần tử được đánh số từ 0 nên muốn truy xuất đến phần tử thứ 2 của mảng thì chỉ số phần tử là 1
+*/
+        
+Console.WriteLine(Pi[1]);
+
++ Một số thuộc tính và phương thức đặc trưng của mảng 1 chiều:
+
+- Length : Thuộc tính trả về số nguyên kiểu int là số phần tử tối đa của mảng
+
+- LongLength : Thuộc tính trả về số nguyên kiểu long là số phần tử tối đa của mảng
+
+- GetLength(<số chiều>) : Trả về số nguyên kiểu int là số phần tử trong chiều đã xác định. Lưu ý chiều của mảng là các số nguyên và được đánh số từ 0. Cho nên đối với mảng 1 chiều thì số chiều là 0.
+
+- GetLongLength(<số chiều>) : Tương tự GetLength nhưng trả về số nguyên kiểu long
+
+- Sort() : Phương thức thực hiện sắp xếp mảng theo một thứ tự
+
+- Clear() : Phương thức xóa hết dữ liệu trong mảng và đưa về giá trị mặc định của kiểu. Lưu ý là chỉ xóa giá trị, vùng nhớ vẫn còn đó và có thể tiếp tục sử dụng mà không cần cấp phát.
+
+- Copy() : Thực hiện copy giá trị của mảng ra một vùng nhớ mới (phép gán thông thường thì 2 đối tượng sẽ dùng chung vùng nhớ rất nguy hiểm vì đối tượng này thay đổi dẫn đến đối tượng kia cũng thay đổi)
+
+- Reverse() : Phương thức thực hiện đảo ngược thứ tự của mảng 1 chiều
+
+4 Cách duyệt mảng 1 chiều
+
++ Ý tưởng:
+
+- Để truy xuất đến các phần tử của mảng cần thông qua chỉ số phần tử.
+
+- Mà chỉ số phần tử là các số nguyên không âm tăng dần.
+
+- Từ đó ta có thể tận dụng vòng lặp để tăng giá trị 1 biến lên rồi xem biến đó như là chỉ số phần tử của mảng.
+
+Ví dụ:
+-
+int[] Pi = new int[3];
+for (int i = 0; i < 3; i++) // Vì các phần tử có chỉ số là 0 1 2 nên điều kiện dừng là i < 3
+{
+    // Do something
+}
+
+- Mọi thứ đều suôn sẻ cho đến một ngày vì lí do nào đó bạn cần nâng cấp mảng Pi lên 10 phần tử. Khi đó vấn đề sẽ xuất hiện, bạn phải đi thay đổi tất cả những chỗ nào liên quan đến số phần tử từ 3 thành 10 hết. Như vậy mỗi lần có thay đổi về số phần tử bạn đều phải làm lại những việc đó. Vậy tại sao ta không tận dụng một thuộc tính vừa được học xong để giải quyết?
+
+int[] Pi = new int[3];
+
+/*
+* Thay số 3 thành thuộc tính Length.
+* Bây giờ bạn có thay đổi số phần tử thì chỉ cần thay đổi ở khai báo thôi là xong!
+*/
+
+for (int i = 0; i < Pi.Length; i++)
+{
+    / Do something
+}
+
+- Với cách duyệt mảng như thế này bạn đã có thể làm mọi thứ với mảng từ nhập xuất giá trị cho mảng đến tính toán phức tạp.
+
++ Một số thao tác : thêm xóa, tìm kiếm, sắp xếp trong mảng 1 chiều C# :
+
+class Program
+{
+    static void nhapmang(int[] a, int n)
+    {
+        for (int i = 0; i < n; ++i)
+        {
+            Console.WriteLine("Nhap vao phan tu thu " + (i + 1) + " cua mang : ");
+            a[i] = Convert.ToInt32(Console.ReadLine());
+        }
+    }
+
+    static void xuatmang(int[] a, int n)
+    {
+        Console.WriteLine();
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write(a[i] + " ");
+        }
+    }
+
+    static void themphantu(ref int[] a, ref int n, int value, int vitri)
+    {
+        Array.Resize(ref a, n + 1); // resize thêm 1 ô nhớ trước khi tiến hành quá trình thêm
+        for (int i = n; i > vitri; --i)
+        {
+            a[i] = a[i - 1];
+        }
+        a[vitri] = value;
+        n++; 
+    }
+
+    static void xoaphantu(ref int[] a, ref int n, int vitri)
+    {
+        for (int i = vitri; i < n - 1; ++i)
+        {
+            a[i] = a[i + 1];
+        }
+        Array.Resize(ref a, n - 1); // resize bỏ đi 1 ô nhớ sau quá trình xóa
+        --n;
+    }
+        
+    public static void Main(string[] args)
+    {
+        int n;
+        Console.Write("\nNhap vao so luong phan tu cua mang : ");
+        n = Convert.ToInt32(Console.ReadLine());
+        int[] a = new int[n];
+        nhapmang(a, n);
+        xuatmang(a, n);
+
+        Console.Write("\nNhap vao phan tu can them : ");
+        int value = Convert.ToInt32(Console.ReadLine());
+        Console.Write("\nNhap vao vi tri can them : ");
+        int vitri = Convert.ToInt32(Console.ReadLine());
+        themphantu(ref a, ref n, value, vitri - 1);
+        Console.Write("\nMang a sau khi them phan tu " + value + " la : ");
+        xuatmang(a, n);
+
+        Console.Write("\nNhap vao vi tri can xoa : ");
+        vitri = Convert.ToInt32(Console.ReadLine());
+        xoaphantu(ref a, ref n, vitri - 1);
+        Console.Write("\nMang a sau khi xoa phan tu " + a[vitri - 1] + " la : ");
+        xuatmang(a, n);
+            
+        Array.Sort(a);
+        Console.Write("\nMang a sau khi sap xep tang dan la : ");
+        xuatmang(a, n);
+            
+        Array.Reverse(a);
+        Console.Write("\nMang a sau khi sap xep giam dan la : ");
+        xuatmang(a, n);
+
+        Console.ReadKey();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+2.1, Giới thiệu ngôn ngữ C#
+
+C# là một ngôn ngữ lập trình hướng đối tượng, bậc cao, có cấu trúc rõ ràng, dễ hiểu và dễ học. C# thừa hưởng những ưu việt từ ngôn ngữ Java và C++ cũng như khắc phục được những hạn chế của các ngôn ngữ này. C# được Microsoft xây dựng dựa trên C++ và Java(Dựa trên C++ là chủ yếu).
+
+1.1 Đặc trưng của C# :
+
++ C# là ngôn ngữ lập trình đơn giản :
+
+- C# chỉ có khoảng 80 từ khóa và khoảng hơn 10 kiểu dữ liệu được dựng sẵn. Phần lớn các từ khóa được sử dụng để mô tả thông tin. 
+
+- C# loại bỏ một vài sự phức tạp của Java và C++, bao gồm những macro, những template, đa kế thừa, và lớp cơ sở ảo (virtual base class). Thay vào đó C# hỗ trợ thực thi giao diện interface trong tính kế thừa.
+
+- C# đơn giản vì nó dựa trên nền tảng chính là C++. C# khá giống về cú pháp, biểu thức, toán tử và những chức năng khác được lấy trực tiếp từ C++, nhưng nó đã được cải tiến cho đơn giản hơn.
+
++ C# là ngôn ngữ hiện đại :
+
+- Những đặc tính như là xử lý ngoại lệ, thu gom bộ nhớ tự động, những kiểu dữ liệu mở rộng, và bảo mật mã nguồn là những đặc tính được mong đợi trong một ngôn ngữ hiện đại. C# chứa tất cả những đặc tính trên. 
+
++ C# là một ngôn ngữ lập trình thuần hướng đối tượng :
+
+- Lập trình hướng đối tượng (OOP: Object-oriented programming) là một phương pháp lập trình có 4 tính chất. Đó là tính trừu tượng (abstraction), tính đóng gói (encapsulation), tính đa hình (polymorphism) và tính kế thừa (inheritance). C# hỗ trợ tất cả những đặc tính trên.
+
+- Cung cấp những đặc tính hướng thành phần (component-oriented) như là Property, Event 
+
+- C# có bộ Garbage Collector sẽ tự động thu gom vùng nhớ khi không còn sử dụng nữa.
+
+
+1.2 Ưu và nhược điểm của C#
+
++ Một số ưu điểm nổi bật của C#:
+
+- Gần gũi với các ngôn ngữ lập trình thông dụng (C++, Java).
+
+- Xây dựng dựa trên nền tảng của các ngôn ngữ lập trình mạnh mẽ nên được thừa hưởng những ưu điểm của những ngôn ngữ đó.
+
+- Cải tiến các khuyết điểm của C/C++ như con trỏ, . . .
+
+- Dễ tiếp cận, dễ phát triển.
+
+- Được sự chống lưng của .NET Framework.
+
+
++ Đi kèm với những điểm mạnh trên thì C# cũng có những nhược điểm:
+
+- Nhược điểm lớn nhất của C# là chỉ chạy trên nền Windows và có cài .NET Framework.
+
+- Thao tác đối với phần cứng yếu hơn so với ngôn ngữ khác, hầu hết phải dựa vào Windows.
+
+
+
+
+
+
+
+
+
+
+
+

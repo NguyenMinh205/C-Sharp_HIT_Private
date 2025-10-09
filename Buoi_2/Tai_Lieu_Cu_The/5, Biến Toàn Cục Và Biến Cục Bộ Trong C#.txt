@@ -1,0 +1,126 @@
+2.5, Biến Toàn Cục Và Biến Cục Bộ Trong C#
+
+1 Biến toàn cục và biến cục bộ trong C#
+
+- Biến toàn cục là biến được khai báo ở phân cấp cao hơn vị trí đang xác định.
+
+- Biến cục bộ là biến được khai báo ở cùng phân cấp tại vị trí đang xác định.
+
+- Vòng đời của biến toàn cục và biến cục bộ bắt đầu khi khối lệnh chứa nó bắt đầu (khối lệnh bắt đầu bằng dấu “{“) và kết thúc khi khối lệnh chứa nó kết thúc (khối lệnh kết thúc bằng dấu “}”).
+
+- Biến cục bộ được ưu tiên sử dụng hơn biến toàn cục trong trường hợp 2 biến này trùng tên.
+
+Ví dụ về biến toàn cục
+
+class Program
+{
+    // biến toạn cục của các hàm nằm trong class Program
+    // biến cục bộ của class Program
+
+    static int value = 5;
+    static void Main(string[] args)
+    {
+        // in ra màn hình biến toàn cục
+
+        Console.WriteLine(value);
+        PrintSomeThing();
+        Console.ReadKey();
+    }
+
+    static void PrintSomeThing()
+    {           
+        // in ra màn hình biến toán cục
+        Console.WriteLine(value);
+    }
+}
+
+- Chúng ta thử thay đổi giá trị của biến value ngay trước khi gọi hàm PrintSomeThing nhé.
+
+class Program
+{
+    // biến toạn cục của các hàm nằm trong class Program
+    // biến cục bộ của class Program
+
+    static int value = 5;
+    static void Main(string[] args)
+    {
+        // in ra màn hình biến toàn cục
+        Console.WriteLine(value);
+
+        // thay đổi giá trị của value
+        value = 10;
+
+        // kết quả gọi hàm này sẽ in ra màn hình giá trị là 10
+        PrintSomeThing();
+        Console.ReadKey();
+    }
+
+    static void PrintSomeThing()
+    {           
+        // in ra màn hình biến toán cục
+        Console.WriteLine(value);
+    }
+}
+
+- Kết quả là màn hình in ra giá trị 5 và 10. Do giá trị của biến value đã bị thay đổi trước khi gọi hàm PrintSomeThing.
+
+-  Và giờ chúng ta thử tạo một biến cục bộ ngay bên trong hàm PrintSomeThing.
+
+class Program
+{
+    // biến toạn cục của các hàm nằm trong class Program
+    // biến cục bộ của class Program
+
+    static int value = 5;
+
+    static void Main(string[] args)
+    {
+        // in ra màn hình biến toàn cục
+        Console.WriteLine(value);
+
+        // thay đổi giá trị của value
+        value = 10;
+
+        // kết quả gọi hàm này sẽ không thay đổi vì ưu tiên biến cục bộ hơn
+        PrintSomeThing();
+        Console.ReadKey();
+    }
+
+    static void PrintSomeThing()
+    {
+        int value = 9;
+        // in ra màn hình biến toàn cục
+        Console.WriteLine(value);
+    }
+}
+
+- Kết quả màn hình in ra giá trị 5 và 9. Không in ra giá trị 10 vì biến cục bộ được ưu tiên sử dụng hơn. Ở hàm Main, thay đổi giá trị của biến value thì biến value này đang là biến toàn cục. Không làm thay đổi giá trị của biến cục bộ bên trong hàm PrintSomeThing.
+
+
++ Lưu ý:
+
+- Parameter chính là một biến cục bộ.
+
+- Biến cục bộ có phạm vi sử dụng bên trong cặp dấu ngoặc nhọn { }.
+
+static void Main(string[] args)
+{
+    bool isTrue = true;
+
+    if (isTrue)
+    {
+        int value = 5;
+        Console.WriteLine(value);
+    }
+    else
+    {
+        // không thể sử dụng biến value vì hiện thời biến value là biến cục bộ của câu if true
+        // vòng đời của biến cục bộ value chỉ nằm bên trong cặp dấu ngoặc nhọn {}
+        Console.WriteLine(value);
+    }
+    Console.ReadKey();
+}
+
+
+
+

@@ -1,0 +1,79 @@
+3.6, Vòng Lặp Trong C#
+
+1 Cấu trúc của vòng lặp
+
+- Một vòng lặp là một chuỗi các sự kiện, hành động lặp lại đến khi thỏa mãn điều kiện dừng nào đó. Hay nói cách khác, vòng lặp là chuỗi các sự kiện, hành động lặp đi lặp lại khi thỏa mãn điều kiện nào đó. Vòng lặp sẽ kết thúc khi không còn thỏa mãn điều kiện lặp nữa.
+
+- Vòng lặp vô tận là một chuỗi các sự kiện, hành động lặp lại vô tận do không bao giờ thỏa mãn điều kiện dừng.
+ 
+
+Ví dụ vòng lặp trong tự nhiên:
+
+- Vòng lặp của một ngày: Thức dậy -> Ăn -> Ngủ -> lại thức dậy.
+
+- Vòng lặp của nước: Bốc hơi -> Tụ thành mây -> Mây tạo mưa -> Mưa ngấm vào mạch nước ngầm -> Lại bốc hơi.
+
+- Vòng lặp vô tận: Sáng mặt trời mọc -> Tối mặt trời lặn -> Sáng mặt trời lại mọc.
+
+Ví dụ vòng lặp trong lập trình (mã giả):
+
+// vòng lặp kết thúc khi đủ 10 lần
+
+Lặp 10 lần
+{
+	Console.WriteLine("Pi");
+}
+
+Hoặc
+
+int i = 0;
+
+// vòng lặp kết thúc khi điều kiện dừng thỏa là i > 10 hay I == 11
+
+Lặp đến khi i > 10
+{
+	Console.WriteLine("Pi");
+	i++; // i tăng thêm một đơn vị [0, 1, 2, 3, .., 10, 11]
+}
+
+Hoặc
+
+int i = 0;
+
+// vòng lặp không kết thúc vì i mãi == 0
+
+Lặp đến khi i > 10
+{
+	Console.WriteLine("Pi");
+}
+
+2 Các vòng lặp trong C#
+
++ Trong C# có nhiều cách để thực hiện vòng lặp. Chúng ta sẽ điểm qua tên của chúng nhé:
+
+- Vòng lặp For
+
+- Vòng lặp While
+
+- Vòng lặp Do While
+
+- Vòng lặp Foreach
+
+- Vòng lặp goto
+
+- Vòng lặp không chính quy khác (sẽ đề cập ở những phần ứng dụng thức tế)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

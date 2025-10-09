@@ -1,0 +1,183 @@
+3.5, Cấu Trúc switch case Trong C#
+
+1 Cấu trúc switch case dạng thiếu và dạng đủ
+
++ Dạng thiếu :
+
+- Cú pháp:
+
+switch (<biểu thức>)
+
+{
+
+case <giá trị thứ 1>: <câu lệnh thứ 1>;
+
+    break;
+
+case <giá trị thứ 2>: <câu lệnh thứ 2>;
+
+    break;
+
+. . .
+
+case <giá trị thứ n>: <câu lệnh thứ n>;
+
+    break;
+
+}
+
++ Trong đó:
+
+- switch, case là từ khóa bắt buộc.
+
+- break là một lệnh nhảy. Ý nghĩa của nó là thoát ra khỏi cấu trúc, vòng lặp chứa nó 
+
+- Ngoài break ra vẫn còn lệnh nhảy khác như goto nhưng ít được sử dụng.
+
+- Vì trong cấu trúc switch. . . case chủ yếu chỉ sử dụng lệnh break nên mình cố tình để lệnh break vào trong cú pháp thay vì ghi chung chung là lệnh nhảy.
+
++ <biểu thức> phải là biểu thức trả về kết quả kiểu:
+
+- Số nguyên (int, long, byte, . . .)
+
+- Ký tự hoặc chuỗi (char, string)
+
+- Kiểu liệt kê (enum, sẽ được trình bày trong bài ENUM TRONG LẬP TRÌNH C# )
+
+- <giá trị thứ i> với i = 1..n là giá trị muốn so sánh với giá trị của <biểu thức>.
+
+- <câu lệnh thứ i> với i = 1..n là câu lệnh muốn thực hiện khi <giá trị thứ i> tương ứng bằng với giá trị của <biểu thức>.
+
++ Ý nghĩa: Duyệt lần lượt từ trên xuống dưới và kiểm tra xem giá trị của <biểu thức> có bằng với <giá trị thứ i> đang xét hay không. Nếu bằng thì thực hiện <câu lệnh thứ i> tương ứng.
+
++ Lưu ý:
+
+- <giá trị thứ i> phải có kiểu dữ liệu giống với kiểu dữ liệu của giá trị của biểu thức.
+
+- <câu lệnh thứ i> có thể gồm nhiều câu lệnh và không nhất thiết phải đặt trong cặp dấu ngoặc nhọn {} nhưng tốt hơn bạn nên đặt trong cặp dấu {} để code được rõ ràng hơn.
+
+- Nếu case đang xét không rỗng (có lệnh để thực hiện) thì bắt buộc phải có lệnh nhảy (cụ thể là lệnh break) sau đó.
+
+Ví dụ:
+
+int k = 8;
+
+switch (k)
+{
+    case 3:
+        Console.WriteLine("HowKteam");
+        break; // Vì case này có lệnh thực hiện nên phải có lệnh break 
+    case 9: // case này rỗng (không có lệnh thực hiện) nên không cần lệnh break
+    case 10:
+         Console.WriteLine("Free Education");
+         break;
+}
+
+Lưu đồ sau sẽ minh họa cho các bạn cách thức hoạt động của cấu trúc switch... case dạng thiếu: 
+
+- Chú ý là trường hợp không có lệnh break như trong hình đồng nghĩa với việc case đó rỗng (không có câu lệnh thực hiện).
+
+- Đối với case cuối cùng dù có câu lệnh để thực hiện hay không vẫn phải có lệnh break để thoát khỏi cấu trúc.
+
+Ví dụ:
+
+int k = 10;
+
+switch (k) // giá trị biểu thức là giá trị của biến k (kiểu số nguyên)
+{
+    case 3: // các giá trị so sánh cũng là kiểu số nguyên
+        Console.WriteLine("Chi"); // lệnh thực hiện nếu k = 3
+        break; // lệnh thoát ra khỏi cấu trúc
+    case 9:
+        Console.WriteLine("Pi"); // tương tự
+        break;
+    case 10:
+        Console.WriteLine("Chi Pi"); // tương tự
+        break;
+}
+
++ Dạng đủ :
+ 
+- Cú pháp:
+
+switch (<biểu thức>)
+
+{
+    case <giá trị thứ 1>: 
+	<câu lệnh thứ 1>;
+	break;
+
+    case <giá trị thứ 2>: 
+	<câu lệnh thứ 2>;
+	break;
+
+. . .
+
+    case <giá trị thứ n>: 
+	<câu lệnh thứ n>;
+	break;
+
+    default: 
+	<câu lệnh mặc định>;
+        break;
+}
+
++ Trong đó: 
+
+- switch, case, default là từ khóa bắt buộc.
+
+- <biểu thức> phải là biểu thức trả về kết quả kiểu:
+
+- Số nguyên (int, long, byte, . . .)
+
+- Ký tự hoặc chuỗi (char, string)
+
+- Kiểu liệt kê (enum, sẽ được trình bày trong bài ENUM TRONG LẬP TRÌNH C#)
+
+- <giá trị thứ i> với i = 1..n là giá trị muốn so sánh với giá trị của <biểu thức>.
+
+- <câu lệnh thứ i> với i = 1..n là câu lệnh muốn thực hiện khi <giá trị thứ i> tương ứng bằng với giá trị của <biểu thức>.
+
+- <câu lệnh mặc định> là câu lệnh sẽ được thực hiện nếu giá trị <biểu thức> không bằng với <giá trị thứ i> nào.
+
++ Ý nghĩa: Duyệt lần lượt từ trên xuống dưới và kiểm tra xem giá trị của <biểu thức> có bằng với <giá trị thứ i> đang xét hay không. Nếu bằng thì thực hiện <câu lệnh thứ i> tương ứng. Nếu không bằng tất cả các <giá trị thứ i> thì sẽ thực hiện <câu lệnh mặc định>.
+
+- Về cơ bản cách thức hoạt động của 2 cấu trúc switch. . . case dạng đủ và dạng thiếu là như nhau, chỉ khác nhau ở một diểm là dạng đủ có thêm dòng default. . .nên các bạn xem lại lưu ý của dạng thiếu để tránh mắc lỗi.
+
+Ví dụ:
+
+int k = 8;
+
+switch (k)
+{
+    case 3:
+        Console.WriteLine("Chi");
+        break;
+    case 9:
+        Console.WriteLine("Pi");
+        break;
+    case 10:
+        Console.WriteLine("ChiPi");
+        break;
+    default: // Nếu không thỏa các trường hợp trên sẽ thực hiện lệnh sau đây
+        Console.WriteLine("Chi love Pi");
+        break;
+}
+
+- Vì không tìm thấy case nào có giá trị bằng với giá trị biến k nên sẽ thực hiện câu lệnh trong default. Do đó màn hình in ra “Chi love Pi ”.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

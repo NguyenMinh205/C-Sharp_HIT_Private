@@ -1,0 +1,259 @@
+3.3, Ép Kiểu Trong C#
+
+1 Ép kiểu là gì? Tại sao phải ép kiểu?
+
+- Ép kiểu là biến đổi dữ liệu thuộc kiểu dữ liệu này thành kiểu dữ liệu khác.
+
++ Tại sao phải ép kiểu?
+
+- Để chuyển dữ liệu sang một kiểu dữ liệu mong muốn phục vụ cho việc thao tác xử lý.
+
+- Đưa dữ liệu về định dạng mà mình mong muốn (ví dụ chuyển kiểu ngày tháng bên Mỹ (tháng đặt trước ngày) sang dạng ngày tháng bên Việt Nam (ngày đặt trước tháng)).
+
+2 Có mấy loại ép kiểu? Cách sử dụng từng loại
+
++, Trong C#, ép kiểu có 4 loại:
+
+- Chuyển đổi kiểu ngầm định (implicit).
+
+- Chuyển đổi kiểu tường minh (explicit).
+
+- Sử dụng phương thức, lớp hỗ trợ sẵn:
+
+	+ Dùng phương thức Parse(), TryParse().
+
+	+ Dùng lớp hỗ trợ sẵn (Convert).
+
+- Người dùng tự định nghĩa kiểu chuyển đổi.
+
+2.1 Chuyển đổi kiểu ngầm định (implicit)
+
+- Là việc chuyển đổi được thực hiện bởi trình biên dịch và chúng ta không cần tác động gì.
+
++ Có thể thực hiện khi chuyển kiểu từ :
+
+- Kiểu dữ liệu nhỏ sang kiểu dữ liệu lớn hơn (VD từ int sang long)
+
+Ví dụ:
+
+int intValue = 10;
+long longValue = intValue; /* Chuyển kiểu ngầm định vì kiểu long có miền giá trị lớn hơn kiểu int nên có thể chuyển từ int sang long.*/
+
+float floatValue = 10.9f;
+double doubleValue = floatValue; /* Tương tự vì kiểu double có miền giá trị lớn hơn kiểu float nên có thể chuyển từ float sang double.*/ 
+
+
+- Chuyển từ lớp con đến lớp cha
+
+Ví dụ: Giả sử có một lớp cha Shape và một lớp con Circle kế thừa từ lớp cha Shape. Bây giờ, ta tạo một đối tượng của lớp con Circle và sau đó chuyển đổi nó thành một đối tượng của lớp cha Shape bằng cách sử dụng ép kiểu: Shape shape = (Shape) circle; Khi gọi phương thức Draw() trên đối tượng shape đã được ép kiểu, phương thức được gọi là phương thức của lớp con Circle.
+
+
+2.2 Chuyển đổi kiểu tường minh (explicit)
+ 
+- Là việc chuyển kiểu một cách rõ ràng và dùng từ khóa chỉ định chứ không dùng phương thức.
+
++ Một số đặc điểm của chuyển đổi kiểu tường minh:
+
+- Thường được dùng để chuyển đổi giữa các kiểu dữ liệu có tính chất tương tự nhau (thường thì với số).
+Hỗ trợ trong việc boxing và unboxing đối tượng 
+
+- Cú pháp ngắn gọn do không sử dụng phương thức.
+
+- Chỉ khi chúng ta biết rõ biến đó thuộc kiểu dữ liệu nào mới thực hiện chuyển đổi. Ngược lại có thể lỗi khi chạy chương trình.
+
+- Cú pháp:
+
+(<kiểu dữ liệu>) <biến cần ép kiểu>
+
++ Trong đó : 
+
+- <kiểu dữ liệu> là kiểu dữ liệu mà mình muốn chuyển sang.
+
+- <biến cần ép kiểu> là biến chưa dữ liệu cần ép kiểu.
+
+*Lưu ý : Phải có cặp dấu ngoặc tròn ().
+
++ Ý nghĩa:
+
+- Ép kiểu của <biến cần ép kiểu> về <kiểu dữ liệu> nếu thành công sẽ trả ra giá trị kết quả ngược lại sẽ báo lỗi chương trình. Đặc biệt đối với số:
+
+- Ta có thực hiện ép kiểu dữ liệu lớn hơn về kiểu dữ liệu nhỏ hơn mà không báo lỗi.
+
+- Nếu dữ liệu cần ép kiểu vượt quá miền giá trị của kiểu dữ liệu muốn ép kiểu về thì chương trình sẽ tự cắt bit cho phù hợp với khả năng chứa kiểu dữ liệu đó (cắt từ bên trái qua).
+
+Ví dụ:
+
+int i = 300; // 300 có mã nhị phân là 100101100
+byte b = (byte)i; 
+
+/* do kiểu byte có giới hạn đến giá trị 255 thôi nên không thể chứa số 300 được mà kiểu byte có kích thước là 1 bytes tương đương 8 bit. Như vậy ta cần cắt mã nhị phân của số 300 về còn 8 bit là được. Mã nhị phân 300 là 100101100 cắt từ trái qua 1 bit ta được 00101100 (đủ 8 bit) tương đương với số 44. Cuối cùng biến b sẽ mang giá trị là 44.*/
+
+Console.WriteLine(" i = " + i);
+Console.WriteLine(" b = " + b);
+
+- Việc ép kiểu thế này làm ta nhớ đến một vấn đề nho nhỏ sau: Ở bài TOÁN TỬ TRONG C# ta có nói là toán tử “/” là thực hiện chia lấy phần nguyên nếu cả 2 toán hạng đều là số nguyên. Vậy nếu chúng ta muốn chia ra kết quả chính xác luôn thì phải làm sao?
+
+- Ý tưởng đơn giản là ta ép kiểu 1 trong 2 toán hạng đó về dạng số thực là xong.
+
+- Cách khác, ta có thể làm đơn giản là nhân 1 trong 2 toán hạng với số 1.0 cũng sẽ cho ra kết quả như ý muốn.
+
+Ví dụ:
+
+double d = 2 / 3; // kết quả ra 0 vì 2 và 3 đều là số nguyên nên thực hiện 2 chia lấy phần nguyên với 3 được 0
+
+double k = (double)2 / 3; // Ép kiểu số 2 từ kiểu nguyên sang kiểu số thực. Như vậy kết quả phép chia sẽ ra số thực
+        
+double t = 1.0 * 2 / 3; // Thực hiện nhân 1.0 với 2 mục đích để biến số 2 (số nguyên) thành 2.0 (số thực)
+
+Console.WriteLine(" d = {0} \n k = {1} \n t = {2}", d, k, t);
+
+Kết quả khi chạy chương trình thì biến k và biến t đều cho giá trị như nhau
+
+2.3 Sử dụng phương thức, lớp hỗ trợ sẵn
+
+2.3.1 Phương thức Parse(), TryParse()
+
++ Parse()
+
+- Cú pháp:
+
+<kiểu dữ liệu>.Parse(<dữ liệu cần chuyển đổi>);
+
++ Trong đó :
+
+- <kiểu dữ liệu> là kiểu dữ liệu cơ bản mình muốn chuyển đổi sang.
+
+- <dữ liệu cần chuyển đổi> là dữ liệu thuộc kiểu chuỗi, có thể là biến kiểu chuỗi hoặc giá trị hằng kiểu chuỗi.
+
++ Ý nghĩa:
+
+- Chuyển đổi một chuỗi sang một kiểu dữ liệu cơ bản tương ứng.
+
+- Phương thức trả về giá trị kết quả chuyển kiểu nếu chuyển kiểu thành công. Ngược lại sẽ báo lỗi chương trình.
+
+Ví dụ:
+
+string stringValue = "10";
+int intValue = int.Parse(stringValue); // Chuyển chuỗi stringValue sang kiểu int và lưu giá trị vào biến intValue - Kết quả intValue = 10
+
+double Pi = double.Parse("10.9"); // Chuyển chuỗi giá trị hằng "10.9" sang kiểu int và lưu giá trị vào biến Pi - Kết quả Pi = 10.9
+
+
++ TryParse() :
+
+- Cú pháp:
+
+<kiểu dữ liệu>.TryParse(<dữ liệu cần chuyển đổi>, out <biến chứa kết quả>);
+
++ Trong đó :
+
+- <kiểu dữ liệu> là kiểu dữ liệu cơ bản mình muốn chuyển đổi sang.
+
+- <dữ liệu cần chuyển đổi> là dữ liệu thuộc kiểu chuỗi, có thể là biến kiểu chuỗi hoặc giá trị hằng kiểu chuỗi.
+
+- <biến chứa kết quả> là biến mà bạn muốn lưu giá trị kết quả sau khi chuyển kiểu thành công. Từ khóa out là từ khóa bắt buộc phải có
+
++ Ý nghĩa:
+
+- Chuyển một chuỗi sang một kiểu dữ liệu cơ bản tương ứng.
+
+- Phương thức sẽ trả về true nếu chuyển kiểu thành công và giá trị kết quả chuyển kiểu sẽ lưu vào <biến chứa kết quả>. Ngược lại sẽ trả về false và <biến chứa kết quả> sẽ mang giá trị 0.
+
+Ví dụ:
+
+int Result; // Biến chứa giá trị kết quả khi ép kiểu thành công
+bool isSuccess; // Biến kiểm tra việc ép kiểu có thành công hay không
+string Data1 = "10", Data2 = "Pi"; // Dữ liệu cần ép kiểu
+
+isSuccess = int.TryParse(Data1, out Result); // Thử ép kiểu Data1 về int nếu thành công thì Result sẽ chứa giá trị kết quả ép kiểu và isSuccess sẽ mang giá trị true. Ngược lại Result sẽ mang giá trị 0 và isSuccess mang giá trị false
+
+Console.Write(isSuccess == true ? " Success !" : " Failed !"); // Sử dụng toán tử 3 ngôi để in ra màn hình việc ép kiểu đã thành công hay thất bại.
+Console.WriteLine(" Result = " + Result); // In giá trị Result ra màn hình
+
+isSuccess = int.TryParse(Data2, out Result); // Tương tự như trên nhưng thao tác với Data2
+Console.Write(isSuccess == true ? " Success !" : " Failed !"); // Tương tự như trên
+Console.WriteLine(" Result = " + Result); // Tương tự như trên
+
+Vì Data1 có thể ép kiểu về int nên kết quả thành công và in giá trị ra. Còn Data2 không thể ép kiểu về kiểu int nên kết quả không thành công và in ra giá trị 0.
+
++ Lưu ý khi sử dụng Parse() và TryParse():
+
+- Tham số truyền vào phải là một chuỗi.
+
+- Cả 2 phương thức được gọi thông qua tên kiểu dữ liệu.
+
+- Parse() trả về giá trị kết quả ép kiểu nếu ép kiểu không thành công thì sẽ báo lỗi. Còn TryParse() trả về xem ép kiểu có thành công hay không, giá trị kết quả ép kiểu sẽ nằm trong <biến chứa kết quả>.
+
+Ngoài TryParse() ra thì vẫn có một cách ép kiểu không báo lỗi chương trình. Đó là sử dụng toán tử as:
+
+Trong bài TOÁN TỬ TRONG C# chúng ta có giới thiệu toán tử as dùng để “Ép kiểu mà không gây ra lỗi. Nếu ép kiểu không thành công sẽ trả về null”.
+
+- Chỉ áp dụng cho việc chuyển kiểu giữa các kiểu tham chiếu tương thích (thường là các kiểu có quan hệ kế thừa hoặc các kiểu nullable.
+
+2.3.2 Lớp hỗ trợ sẵn (Convert)
+
+- Convert là lớp tiện ích được C# hỗ trợ sẵn cung cấp cho chúng ta nhiều phương thức chuyển đổi kiểu dữ liệu.
+
++ Các đặc điểm của các phương thức trong lớp Convert:
+
+- Tham số truyền vào của các phương thức không nhất thiết là chuỗi (có thể là int, bool, . . .).
+
+- Nếu tham số truyền vào là null thì các phương thức sẽ trả về giá trị mặc định của kiểu dữ liệu.
+
+- Các trường hợp tham số truyền vào sai định dạng hoặc vượt quá giới hạn thì chương trình sẽ báo lỗi như phương thức Parse().
+
++ Một số phương thức chuyển kiểu mà Convert có:
+
+- Các phương thức chuyển kiểu trong lớp Convert đều có thể nhận các kiểu dữ liệu cơ bản (int, bool, byte, . . .) làm tham số truyền vào.
+
+2.4 Người dùng tự định nghĩa kiểu chuyển đổi
+
+- Khi chúng ta tạo ra một kiểu dữ liệu mới chúng ta cũng cần định nghĩa các chuyển đổi kiểu dữ liệu từ kiểu cơ bản sang kiểu tự định nghĩa và ngược lại.
+
+Ví dụ: Viết chương trình nhập vào 2 số a và b sau đó in ra tổng, hiệu, tích, thương của 2 số đó
+
++ Gợi ý/Hướng giải quyết bài toán ví dụ:
+
+- Đầu tiên ta yêu cầu người dùng nhập vào 2 số a và b (lúc này giá trị nhập vào đang ở kiểu chuỗi).
+
+- Ép kiểu giá trị vừa nhập vào kiểu chuỗi. Nếu thất bại sẽ thông báo lỗi và kết thúc chương trình, ngược lại thì thực hiện tiếp.
+
+- Tính tổng, hiệu, tích, thương thì 2 số đó và in kết quả ra màn hình.
+
+Chương trình minh họa:
+
+int A, B; // Biến chứa giá trị 2 số vừa nhập vào (kiểu số)
+int Tong, Hieu, Tich; // Biến chứa kết quả tổng, hiệu, tích
+double Thuong; // Vì phép chia có thể cho ra số thập phân nên dùng biến kiểu double để chứa nó.
+string strA, strB; // Biến chứa giá trị 2 số nhập vào từ bàn phím (kiểu chuỗi)
+
+Console.Write("\n Nhap so A: ");
+strA = Console.ReadLine(); // Nhận giá trị nhập vào từ bàn phím cho số A
+Console.Write(" Nhap so B: ");
+strB = Console.ReadLine(); // Nhận giá trị nhập vào từ bàn phím cho số B
+
+A = int.Parse(strA); // Ép kiểu giá trị nhập vào từ kiễu chuỗi sang kiểu số nguyên, sử dụng phương thức Parse()
+B = int.Parse(strB);
+
+Tong = A + B;
+Hieu = A - B;
+Tich = A * B;
+Thuong = (double)A / B; // Ép kiểu số A về số thập phân để phép chia cho ra số thập phân
+
+Console.WriteLine(" Tong = " + Tong);
+Console.WriteLine(" Hieu = " + Hieu);
+Console.WriteLine(" Tich = " + Tich);
+Console.WriteLine(" Thuong = " + Thuong);
+
+- Các bạn để ý 2 trường hợp ép kiểu trong ví dụ trên, đó là 2 trường hợp thường gặp nhất của ép kiểu được sử dụng trong hầu hết các chương trình tính toán từ đơn giản đến phức tạp.
+
+- Một vấn đề xảy ra trong ví dụ trên là “nếu người dùng không nhập vào một số mà lại nhập chữ hoặc bỏ trống thì sao?”
+
+- Khi đó chương trình sẽ bị lỗi ngay:
+
+- Lúc này ta nên sử dụngs phương thức TryParse() để giải quyết vấn đề trên.
+
+
+
+
+
