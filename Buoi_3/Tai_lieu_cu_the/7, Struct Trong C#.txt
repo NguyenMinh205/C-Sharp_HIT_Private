@@ -1,0 +1,60 @@
+7. Struct Trong C#
+
+1 Struct là gì? Đặc điểm của Struct
+- Struct là một kiểu dữ liệu có cấu trúc, được kết hợp từ các kiểu dữ liệu nguyên thuỷ do người lập trình định nghĩa để thuận tiện trong việc quản lý dữ liệu và lập trình.
+- Struct tương tự như class, nhưng nhẹ hơn, được lưu trên stack thay vì heap, và thường dùng để biểu diễn các đối tượng nhỏ, ít phức tạp (ví dụ: tọa độ, điểm, vector, màu, v.v).
+
+- Đặc điểm
++ Là kiểu dữ liệu tham trị
++ Dùng để đóng gói các trường dữ liệu khác nhau nhưng có liên quan đến nhau, có thể chứa: Trường (field), thuộc tính (property), phương thức (method), constructor, indexer, event, và cả interface.
++ Không thể kế thừa từ class hoặc struct khác, nhưng có thể triển khai interface.
++ Mặc định có constructor không tham số, nhưng bạn có thể tạo thêm constructor có tham số.
++ Muốn sử dụng phải khởi tạo cấp phát vùng nhớ cho đối tượng thông qua toán tử new.
++ Không thể dùng từ khóa null với struct (trừ khi là kiểu Nullable<Struct> hoặc Struct?).
++ Không hỗ trợ kế thừa (inheritance), nhưng có thể overload (nạp chồng) phương thức.
+
+- Khi nào nên dùng struct?
++ Khi đối tượng nhỏ, dữ liệu không thay đổi thường xuyên.
++ Khi cần hiệu suất cao và tránh chi phí quản lý bộ nhớ heap.
++ Ví dụ điển hình: Vector2, Color, Point, Rectangle, v.v. trong Unity và .NET.
+
+2 Khai báo và sử dụng Struct
+- Cú pháp khai báo: 
+struct <tên struct>
+{ 
+	public <danh sách các biến>;
+} 
+Trong đó: 
+• <tên struct> là tên kiểu dữ liệu do mình tự đặt và tuân thủ theo quy tắc đặt tên 
+biến. 
+• <danh sách các biến> là danh sách các biến thành phần được khai báo như khai 
+báo biến bình thường. 
+• Từ khoá public là từ khoá chỉ định phạm vi truy cập. Trong ngữ cảnh hiện tại 
+thì có thể hiểu từ khoá này giúp cho người khác có thể truy xuất được để sử 
+dụng.
+
+- Cách sử dụng: Ta có thể truy xuất đến từng thành phần dữ liệu của struct thông qua toán tử “.” Kèm theo tên thành phần muốn truy xuất.
+VD:
+class Program
+{
+    static void Main()
+    {
+        // Cách 1: Khởi tạo bằng constructor có tham số
+        TênStruct point1 = new TênStruct(5, 10);
+
+        // Cách 2: Khởi tạo mặc định rồi gán giá trị
+        TênStruct point2;
+        point2.x = 3;
+        point2.y = 7;
+
+        // Gọi phương thức
+        point1.ShowInfo();
+        point2.ShowInfo();
+    }
+}
+
+Kết quả:
+Tọa độ: (5, 10)
+Tọa độ: (3, 7)
+
+Vì struct là kiểu tham trị nên khi truyền vào các phương thức thì giá trị của nó sau khi kết thúc phương thức sẽ không thay đổi. Do đó cần sử dụng từ khoá out để có thể cập nhật giá trị thay đổi khi kết thúc phương thức. 

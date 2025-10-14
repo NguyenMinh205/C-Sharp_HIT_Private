@@ -1,0 +1,129 @@
+6. Enum Trong C#
+
+1 Enum là gì? Đặc điểm của Enum
+
+- Enum là từ khoá dùng để khai báo một kiểu liệt kê (Enumeration). Kiểu liệt kê là một tập hợp các hằng số do người dùng tự định nghĩa.
+
+- Nói cách khác, enum là cách mà C# hỗ trợ người dùng gom nhóm các hằng số lại với nhau và có chung một tên gọi (thường các hằng số này sẽ có liên quan với nhau ví dụ như các trạng thái của 1 sự vật, các tính chất của 1 sự vật, . . .)
+
++ Đặc điểm của enum :
+
+- Là một kiểu dữ liệu tham trị.
+
+- Enum không được phép kế thừa.
+
+2 Khai báo và sử dụng enum
+
++ Khai báo :
+
+- Cú pháp :
+
+enum <tên enum>
+{
+    <danh sách các biểu tượng hằng>
+}
+
++ Trong đó:
+
+- <tên enum> là tên kiểu liệt kê do mình tự đặt và tuân thủ theo quy tắc đặt tên.
+
+- <danh sách các biểu tượng hằng> là danh sách các biểu tượng hằng thành phần mỗi biểu tượng hằng cách nhau bằng dấu “,”.
+
+Ví dụ:
+
+enum Color
+{
+    RED,
+    BLUE,
+    YELLOW
+}
+
+- Với khai báo này ta đã có 1 kiểu liệt kê tên là Color.
+
+- Về bản chất, các biểu tượng hằng RED, BLUE, YELLOW này đại diện cho các số nguyên lần lượt là 0, 1, 2.
+
+- Như vậy, nếu như chúng ta sử dụng cách khai báo hằng bình thường thì ta có thể khai báo như sau :
+
+public const int RED = 0;
+
+public const int BLUE = 1;
+
+public const int YELLOW = 2;
+
++ Lưu ý:
+
+- Ta hoàn toàn có thể quy định giá trị cho từng biểu tượng hằng bằng cách trực tiếp khi khai báo. Ví dụ :
+
+enum Color
+{
+    RED = 2,
+    BLUE = 4,
+    YELLOW = 6,
+}
+
+- Khi đó các biểu tượng hằng RED, BLUE, YELLOW sẽ đại diện cho các số nguyên lần lượt là 2, 4, 6
+
+- Nếu ta không quy định giá trị cho các biểu tượng hằng thì giá trị của biểu tượng hằng đầu tiên sẽ mặc định là 0 và tăng dần cho các biểu tượng hằng tiếp theo.
+
++ Sử dụng :
+
+- Ta có thể truy xuất đến từng biểu tượng hằng của enum thông qua toán tử “.” Kèm theo tên biểu tượng hằng muốn truy xuất.
+
+Ví dụ:
+
+Color.RED;
+
++ Lưu ý :
+
+- Mặc dù bản chất các biểu tượng hằng là đại diện cho các số nguyên nhưng bạn không thể so sánh trực tiếp chúng với các số nguyên được mà phải ép kiểu. Ví dụ :
+
+enum Color
+{
+    RED,
+    BLUE,
+    YELLOW
+}
+
+
+
+int Choose = int.Parse(Console.ReadLine());
+
+// lỗi vì không thể so sánh trực tiếp 1 enum với 1 số nguyên
+if (Choose == Color.RED) 
+{
+    Console.WriteLine("Ban vua chon mau do");
+}
+
+- Để chương trình không báo lỗi ta có thể ép kiểu biểu tượng hằng RED về kiểu int.
+
+Choose == (int)Color.RED
+
+- Chúng ta cũng có thể ép kiểu ngược lại từ số nguyên sang kiểu liệt kê.
+
+Ví dụ:
+
+Color Background = (Color)2; // Background sẽ có giá trị là Color.YELLOW
+
+- Khi khai báo 1 biến nào đó, các lập trình viên thường cố gắng xây dựng 1 tập các giá trị của biến đó (nếu có thể) và gom nhóm chúng bằng enum. Điều này rất thường gặp trong các bộ thư viện của C# và là sự khác biệt giữa C# và Java. Vậy sự khác biệt này có ảnh hưởng gì đến việc lập trình? 
+
++ Sau khi xem qua cách khai báo và sử dụng enum ta có thể thấy rằng enum có ưu điểm lớn:
+
+- Chính vì được sử dụng với mục đích gom nhóm các hằng có liên quan với nhau thành 1 tên duy nhất nên khi sử dụng bạn không cần phải nhớ chính xác tên hằng mà chỉ cần nhớ tên enum chứa nó xong. một cái là đủ việc còn lại đã có IDE hỗ trợ gợi ý.
+
++ Một chút ngoài lề:
+
+- Nếu bạn nào đã sử dụng Java thì sẽ biết rằng Java dùng các khai báo hằng bình thường và đặt chúng trong class. Khi đó việc gọi chúng ra rất phiền phức đặc biệt là những bạn mới làm quen với Java. Ta sẽ không nhớ chắc chắn là hằng nào dùng cho biến nào. Thì qua C# điều này đã được giải quyết triệt để. Vì vậy, chúng ta nên... Bỏ Java sang học C# đê :3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
