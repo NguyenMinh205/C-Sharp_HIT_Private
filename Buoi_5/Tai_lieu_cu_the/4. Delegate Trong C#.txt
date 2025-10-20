@@ -1,0 +1,210 @@
+7.4 Delegate Trong C#
+
+1 Delegate(Đại diện) là gì?
+
+- Delegate trong C# khá giống con trỏ hàm trong C++. Con trỏ hàm trong C++  là con trỏ sử dụng để tham chiếu đến địa chỉ của hàm.
+
+- Delegate là một biến kiểu tham chiếu (references) chứa tham chiếu tới một hoặc nhiều phương thức.
+
+- Delegate là một kiểu dữ liệu tham chiếu linh hoạt, cho phép bạn thay đổi phương thức mà nó tham chiếu đến trong khi chương trình đang thực thi.
+
+- Delegate thường được dùng để triển khai các phương thức hoặc sự kiện call-back. Callback là một khái niệm trong lập trình, thường được sử dụng để định nghĩa một hàm mà bạn muốn gọi khi một sự kiện nào đó xảy ra.
+
+- Bạn cứ hiểu Delegate là một biến bình thường, biến này chứa các phương thức mà bạn cần gọi. Sau này lôi ra xài như phương thức bình thường. Giá trị của biến Delegate lúc này là tham chiếu đến các phương thức. Có thể thay đổi runtime khi chương trình đang chạy.
+
+- Delegate được dẫn xuất từ lớp System.Delegate trong C#.
+
+2 Khai báo Delegate trong C#
+
+- Khai báo Delegate trong C# sẽ tương tự như khai báo một biến. Nhưng cần thêm từ khóa Delegate để xác định đây là một Delegate. Đồng thời vì Delegate là để tham chiếu đến một hàm, nên cũng cần khai báo kèm kiểu dữ liệu trả về của và tham số đầu vào của Delegate tương ứng với hàm tham chiếu.
+
++ Cú pháp :
+
+delegate <kiểu trả về> <tên delegate> (<danh sách tham số nếu có>);
+
+Ví dụ:
+
+delegate int MyDelegate(string s);
+
+*Lưu ý: Chữ delegate viết thường
+
+- Lúc này chúng ta đã tạo một Delegate có tên là MyDelegate. MyDelegate có kiểu trả về là int, một tham số đầu vào là string.
+
+- MyDelegate lúc này là một kiểu dữ liệu delegate cụ thể, và nó chỉ tham chiếu được đến các phương thức nhận một chuỗi (string) làm tham số và trả về một số nguyên (int). Mọi phương thức muốn tham chiếu đến với MyDelegate cần tuân thủ chính xác định dạng này.         
+
+3 Khởi tạo và sử dụng Delegate trong C#
+
+- Khi kiểu Delegate được khai báo, đối tượng Delegate phải được tạo với từ khóa new và được tham chiếu đến một phương thức cụ thể. Phương thức này phải cùng kiểu trả về và tham số đầu vào với Delegate đã tạo.
+
+Ví dụ: 
+
+delegate int MyDelegate(string s);
+static void Main(string[] args)
+{
+    Console.OutputEncoding = Encoding.Unicode;
+
+    /* Tạo 1 delegate kiểu MyDelegate tên là convertToInt với từ khoá new       
+    và cho nó tham chiếu đến phương thức ConvertStringToInt để đổi chuỗi 
+    sang số nguyên kiểu int */
+    MyDelegate convertToInt = new MyDelegate(ConvertStringToInt);  
+
+    Console.ReadLine();
+}
+
+static int ConvertStringToInt(string stringValue)
+{
+    int valueInt = 0;
+    Int32.TryParse(stringValue, out valueInt);
+    Console.WriteLine("Đã ép kiểu dữ liệu thành công");
+    return valueInt;        
+}
+
+- Khi tạo một Delegate, tham số được truyền với biểu thức new được viết tương tự như một lời gọi phương thức, nhưng không có tham số tới phương thức đó. Tức là chỉ truyền tên hàm vào thôi. 
+
+- Delegate sẽ tự nhận định hàm được đưa vào có cùng kiểu dữ liệu trả ra và cùng tham số đầu vào hay không.
+
+Ví dụ:
+
+class Program
+{
+    delegate int MyDelegate(string s);
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = Encoding.Unicode;
+        MyDelegate convertToInt = new MyDelegate(ConvertStringToInt);
+        string numberSTR = "35";
+        int valueConverted = convertToInt(numberSTR);
+        Console.WriteLine("Giá trị đã convert thành int: " + valueConverted);
+        Console.ReadLine();
+    }
+
+    static int ConvertStringToInt(string stringValue)
+    {
+        int valueInt = 0;
+        Int32.TryParse(stringValue, out valueInt);
+        Console.WriteLine("Đã ép kiểu dữ liệu thành công");
+        return valueInt;        
+    }
+}
+
+
+- Hàm ConvertStringToInt làm nhiệm vụ là chuyển kiểu dữ liệu của một số từ string sang int.
+
+- Tạo một biến convertToInt có kiểu dữ liệu là MyDelegate. convertToInt này khởi tạo new MyDelegate với tham số đầu vào là tên hàm ConvertStringToInt  (lưu ý chỉ tên hàm thôi).
+
+- Biến numberSTR kiểu string khởi tạo giá trị là 35.
+
+- Biến valueConverted kiểu int khởi tạo nó bằng kết quả gọi Delegate convertToInt với tham số truyền vào Delegate là biến numberSTR.
+
+- Kết quả xuất ra màn hình Console là số 35.
+
+- Nhận thấy Delegate convertToInt mình sử dụng tương tự như một hàm bình thường.
+
+- Do MyDelegate đã khởi tạo đồng nhất kiểu dữ liệu trả về và tham số đầu vào với hàm ConvertStringToInt nên convertToInt mới thỏa mãn điều kiện khởi tạo và sử dụng của hàm ConvertStringToInt này.
+
+- Vậy Delegate bản chất chỉ là một biến thay thế cho hàm, biến này tham chiếu đến các hàm nó muốn tham chiếu để thay thế khi dùng. Cách dùng y như gọi một hàm.
+
+- Vì sao cần Delegate? Delegate sẽ hữu dụng khi bạn cần dùng một hàm như một biến ví dụ như tham số truyền vào của một hàm, hàm call-back, event, ... 
+
+4 Multicast(đa hướng) một Delegate trong C#
+
+- Khi cần thực hiện một chuỗi hàm với cùng kiểu trả về và cùng tham số đầu vào mà không muốn gọi nhiều hàm tuần tự (chỉ gọi 1 hàm 1 lần duy nhất). Lúc này bạn sẽ cần dùng đến Multicast Delegate.
+
+- Ta có thể tạo 1 chuỗi các Delegate cùng kiểu Delegate bằng cách dùng toán tử +. Lúc này khi ta gọi Delegate, nó sẽ thực hiện tuần từ các Delegate được cộng vào với nhau, thằng nào + trước thì được thực hiện trước, thằng nào + sau thì được thực hiện sau
+
+- Có thể loại bỏ Delegate trong multicast bằng toán tử -.
+
+Ví dụ:
+
+class Program
+{
+    delegate int MyDelegate(string s);
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = Encoding.Unicode;
+        MyDelegate convertToInt = new MyDelegate(ConvertStringToInt);
+        MyDelegate showString = new MyDelegate(ShowString);
+        MyDelegate multicast = convertToInt + showString;
+
+        string numberSTR = "35";
+        int valueConverted = convertToInt(numberSTR);
+
+  	Console.WriteLine("Giá trị đã convert thành int: " + valueConverted);
+
+        Console.WriteLine("Kết quả khi gọi multicast Delegate");
+        multicast(numberSTR);
+
+        Console.ReadLine();
+    }
+
+    static int ConvertStringToInt(string stringValue)
+    {
+        int valueInt = 0;
+
+        Int32.TryParse(stringValue, out valueInt);
+        Console.WriteLine("Đã ép kiểu dữ liệu thành công");
+
+        return valueInt;        
+    }
+
+    static int ShowString(string stringValue)
+    {
+        Console.WriteLine(stringValue);
+        return 0;
+    }
+}
+
+
+- Dùng lại ví dụ của phần trước, ta tạo thêm hàm ShowString với mục đích là xuất ra màn hình Console chuỗi truyền vào. Ta tạo thêm 2 Delegate là showString tham chiếu tới hàm ShowString và multicast là kết quả cộng của 2 Delegate convertToInt và showString.
+
+- Ta gọi Delegate multicast để thực hiện 1 lần 2 Delegate tuần tự là convertToInt và showString.
+
+Console.WriteLine("Kết quả khi gọi multicast Delegate");
+multicast(numberSTR);
+
+- Khi cần loại bỏ Delegate trong multicast ta chỉ việc trừ Delegate ra
+
+multicast = multicast - showString;
+
+5 Dùng Delegate cho call-back function
+
+- Như đã đề cập trước đó, Delegate trong C# cũng giống như một biến. Điều thú vị là chúng ta có thể truyền Delegate như một tham số vào hàm, tương tự như việc truyền một biến thông thường. Khi làm như vậy, Delegate này thường được gọi là một "callback function". Mục đích của việc sử dụng callback function là để hàm có thể gọi Delegate được truyền vào nó khi cần, giúp tăng tính linh hoạt và tái sử dụng trong mã nguồn:
+
+delegate int MyDelegate(string s);
+static void Main(string[] args)
+{
+    Console.OutputEncoding = Encoding.Unicode;           
+    MyDelegate showString = new MyDelegate(ShowString);            
+    NhapVaShowTen(showString);
+    Console.ReadLine();
+}
+
+static void NhapVaShowTen(MyDelegate showTen)
+{
+    Console.WriteLine("Mời nhập tên của bạn:");
+    string ten = Console.ReadLine();
+    showTen(ten);
+}
+
+static int ShowString(string stringValue)
+{
+    Console.WriteLine(stringValue);
+    return 0;
+}
+
+- Ý nghĩa của ví dụ này là khi người dùng nhập tên, hàm NhapVaShowTen sẽ gọi Delegate showTen, và showTen sẽ thực hiện công việc cụ thể, ở đây là gọi hàm ShowString để hiển thị tên ra màn hình console. Điều quan trọng là hàm ShowString có thể được thay đổi hoặc thậm chí được định nghĩa mới mà không ảnh hưởng đến code của NhapVaShowTen. Điều này tạo ra tính linh hoạt và tái sử dụng trong việc xử lý dữ liệu người dùng.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

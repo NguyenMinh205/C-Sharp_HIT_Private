@@ -1,0 +1,138 @@
+LINQ — Language Integrated Query trong C#
+
+1. Khái niệm
+- LINQ (Language Integrated Query) là công cụ truy vấn dữ liệu tích hợp trong C#, cho phép thao tác trên các tập dữ liệu (mảng, danh sách, từ điển, file XML, database, v.v.) một cách ngắn gọn, mạnh mẽ và an toàn kiểu dữ liệu (type-safe).
+- Có thể hiểu LINQ là “ngôn ngữ SQL nằm trong C#”.
+
+2. Cú pháp cơ bản
+- LINQ có hai kiểu cú pháp, đều tương đương nhau:
+a) Query Syntax (giống SQL)
+var result = from item in collection
+             where item.hp > 50
+             orderby item.name
+             select item;
+
+b) Method Syntax (dạng gọi hàm nối chuỗi)
+var result = collection
+    .Where(item => item.hp > 50)
+    .OrderBy(item => item.name)
+    .Select(item => item);
+
+
+Cả hai đều cho ra kết quả giống nhau — nhưng method syntax phổ biến hơn trong game vì dễ kết hợp logic C# khác.
+
+3. Cấu trúc hoạt động
+- LINQ thao tác chủ yếu trên các đối tượng kiểu IEnumerable<T> hoặc IQueryable<T>.
+- Cơ chế thực thi:
++ Deferred Execution (trì hoãn): chỉ chạy khi kết quả được duyệt (foreach, ToList(), Count()…)
++ Immediate Execution (tức thời): chạy ngay, ví dụ ToList(), Count(), First(), Sum().
+
+4. Ví dụ thực tế trong lập trình game
+Ví dụ 1: Lọc danh sách kẻ địch
+
+Giả sử ta có danh sách Enemy trong một wave.
+
+public class Enemy
+{
+    public string Name { get; set; }
+    public int HP { get; set; }
+    public bool IsBoss { get; set; }
+}
+
+List<Enemy> enemies = new List<Enemy>
+{
+    new Enemy { Name = "Slime", HP = 20, IsBoss = false },
+    new Enemy { Name = "Orc", HP = 60, IsBoss = false },
+    new Enemy { Name = "Dragon", HP = 500, IsBoss = true },
+    new Enemy { Name = "Goblin", HP = 40, IsBoss = false }
+};
+
+// Lọc kẻ địch có HP > 50
+var strongEnemies = enemies.Where(e => e.HP > 50);
+
+foreach (var e in strongEnemies)
+    Console.WriteLine($"Kẻ địch mạnh: {e.Name} ({e.HP} HP)");
+
+
+Kết quả:
+
+Kẻ địch mạnh: Orc (60 HP)
+Kẻ địch mạnh: Dragon (500 HP)
+
+Ví dụ 2: Tính tổng vàng rơi ra từ quái
+var golds = new int[] { 10, 20, 50, 30, 40 };
+
+// Tổng vàng
+int totalGold = golds.Sum();
+
+Console.WriteLine($"Tổng vàng rơi ra: {totalGold}");
+
+Ví dụ 3: Tìm kẻ địch yếu nhất, mạnh nhất
+var weakest = enemies.Min(e => e.HP);
+var strongest = enemies.Max(e => e.HP);
+
+Console.WriteLine($"Yếu nhất: {weakest} HP");
+Console.WriteLine($"Mạnh nhất: {strongest} HP");
+
+Ví dụ 4: Trích xuất danh sách Boss và sắp xếp theo HP
+var bosses = enemies
+    .Where(e => e.IsBoss)
+    .OrderByDescending(e => e.HP)
+    .Select(e => e.Name);
+
+foreach (var b in bosses)
+    Console.WriteLine($"Boss: {b}");
+
+Ví dụ 5: Gộp nhóm (GroupBy) theo loại quái
+public class Enemy
+{
+    public string Type { get; set; }   // Ví dụ: “Melee”, “Ranged”
+    public string Name { get; set; }
+    public int HP { get; set; }
+}
+
+List<Enemy> enemyList = new List<Enemy>
+{
+    new Enemy { Type = "Melee", Name = "Goblin", HP = 40 },
+    new Enemy { Type = "Melee", Name = "Orc", HP = 60 },
+    new Enemy { Type = "Ranged", Name = "Archer", HP = 35 },
+    new Enemy { Type = "Ranged", Name = "Mage", HP = 50 }
+};
+
+// Nhóm theo loại
+var grouped = enemyList.GroupBy(e => e.Type);
+
+foreach (var group in grouped)
+{
+    Console.WriteLine($"== Loại: {group.Key} ==");
+    foreach (var e in group)
+        Console.WriteLine($"  - {e.Name} ({e.HP} HP)");
+}
+
+
+Kết quả:
+
+== Loại: Melee ==
+  - Goblin (40 HP)
+  - Orc (60 HP)
+== Loại: Ranged ==
+  - Archer (35 HP)
+  - Mage (50 HP)
+
+5. Một số toán tử LINQ thông dụng
+Where(): Lọc phần tử theo điều kiện
+Select(): Lấy ra giá trị mới
+GroupBy(): Nhóm theo khóa
+OrderBy(): Sắp xếp dữ liệu
+Distinct(), Union(): Loại bỏ trùng, hợp hai tập
+Sum(), Count(), Min(), Max(): Tính toán thống kê
+
+6. Khi nào nên dùng LINQ trong game
+- Rất hữu ích khi:
++ Lọc, sắp xếp, tìm kiếm trong danh sách (Enemy, Item, Buff, Quest…)
++ Tính toán thống kê (đếm quái còn sống, tổng damage, tổng vàng…)
++ Kết hợp nhiều nguồn dữ liệu (ví dụ: Enemy + Loot + DropRate)
+
+- Không nên dùng nếu:
++ Cần hiệu năng cực cao trong vòng lặp Update() (vì LINQ tạo bộ lọc tạm → GC tăng).
++ Tốt nhất dùng trong giai đoạn xử lý logic, setup wave, hoặc quản lý dữ liệu, không trong frame loop.

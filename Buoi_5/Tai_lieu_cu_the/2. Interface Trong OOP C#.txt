@@ -1,0 +1,190 @@
+7.2 Interface Trong OOP C#
+
+1 Interface là gì? Tại sao lại sử dụng interface
+
++ Nói sơ lại 1 chút về phân biệt phương thức ảo và thuần ảo 
+
++ Phương thức ảo (Virtual methods):
+
+- Phương thức ảo là một phương thức trong một lớp cha có thể được định nghĩa lại (ghi đè - override) trong lớp con.
+
+- Để một phương thức là phương thức ảo, nó phải có từ khóa virtual.
+
+- Lớp con có thể "ghi đè" phương thức ảo bằng cách sử dụng từ khóa override.
+
+- Mục đích của phương thức ảo là cho phép lớp con có thể thay đổi hoặc mở rộng hành vi của phương thức được kế thừa từ lớp cha.
+
++ Phương thức thuần ảo (Abstract methods):
+
+- Phương thức thuần ảo là một phương thức được khai báo trong lớp trừu tượng (abstract class) mà không có phần code ở thân(implementation) trong lớp đó.
+
+- Để một phương thức là phương thức thuần ảo, nó phải có từ khóa abstract.
+
+- Lớp chứa phương thức thuần ảo cũng phải là lớp trừu tượng.
+
++ Interface là gì:
+
+- Interface (nhiều tài liệu gọi là giao diện hoặc lớp giao tiếp) là 1 tập các thành phần chỉ có khai báo mà không có phần định nghĩa (giống phương thức thuần ảo(abstract) thuộc tính đa hình trong OOP C#).
+
+- Một interface được hiểu như là 1 khuôn mẫu mà mọi lớp thực thi nó đều phải tuân theo. Interface sẽ định nghĩa phần “làm gì” (khai báo) và những lớp thực thi interface này sẽ định nghĩa phần “làm như thế nào” (định nghĩa nội dung) tương ứng.
+
++ Các thành phần trong Interface có thể là:
+
+- Phương thức.
+
+- Property
+
+- Event
+
+- Indexers (@.@ Cái này anh cũng không biết là cái gì :v)
+
+
++ Đặc điểm của interface :
+
+- Chỉ chứa khai báo không chứa phần định nghĩa (giống phương thức thuần ảo). Mặc dù giống phương thức thuần ảo nhưng bạn không cần phải khai báo từ khoá abstract.
+
+- Việc ghi đè 1 thành phần trong interface cũng không cần từ khoá override.
+
+- Không thể khai báo phạm vi truy cập cho các thành phần bên trong interface. Các thành phần này sẽ mặc định là public. Do đó, bất kỳ lớp nào kế thừa Interface đều có thể truy cập được mọi thành phần của nó, và cũng giống phương thức thuần ảo (abstract methods), lớp đó phải định nghĩa lại các thành phần đó, chỉ khác là không cần dùng từ khoá override.
+
+- Interface không chứa các thuộc tính (các biến) dù là hằng số hay biến tĩnh vẫn không được.
+
+- Interface không có constructor cũng không có destructor.
+
+- Các lớp có thể thực thi nhiều interface cùng lúc (ở 1 góc độ nào đó có thể nó là phương án thay thế đa kế thừa).
+
+- Một interface có thể kế thừa nhiều interface khác nhưng không thể kế thừa bất kỳ lớp nào.
+
+
++ Mục đích sử dụng interface :
+
+- Vì C# không hỗ trợ đa kế thừa nên interface ra đời như là 1 giải pháp cho việc đa kế thừa này.
+
+- Trong 1 hệ thống việc trao đổi thông tin giữa các thành phần cần được đồng bộ và có những thống nhất chung. Vì thế dùng interface sẽ giúp đưa ra những quy tắc chung mà bắt buộc các thành phần trong hệ thống này phải làm theo mới có thể trao đổi với nhau được.
+
+2 Khai báo và sử dụng interface
+
+- Cú pháp:
+
+interface <tên interface>
+{
+    // Khai báo các thành phần bên trong interface
+}
+
++ Trong đó:
+
+- Interface là từ khoá dùng để khai báo 1 interface.
+
+- <tên interface> là tên do người dùng đặt và tuân theo các quy tắc đặt tên.
+
+- Lưu ý là để tránh nhầm lẫn với lớp kế thừa thì khi đặt tên interface người ta thường thêm tiền tố “I” để nhận dạng.
+
+- Việc thực thi 1 interface hoàn toàn giống kế thừa từ 1 lớp.
+
+Ví dụ:
+
+interface ISpeak
+{
+    /* Khai báo phương thức nhưng không định nghĩa nội dung */
+    void Speak();
+}
+
+class Animal : ISpeak // lớp Animal thực thi interface ISpeak
+{
+    /* Định nghĩa nội dung cho phương thức trong interface. Phương thức 
+    Speak() phải có phạm vi là public vì phương thức Speak() trong   
+    interface mặc định là public rồi. */
+
+    public void Speak()
+    {
+        Console.WriteLine("Animal is speaking. . ."); 
+    }
+}
+
+- Trong hàm main ta thử phương thức Speak() sẽ ra: Animal is speaking. . .
+
+Animal animal = new Animal();
+
+animal.Speak();
+
+- Vì việc thực thi interface rất giống với kế thừa nên ta hoàn toàn có thể sử dụng câu lệnh sau:
+
+ISpeak animal = new Animal();
+
+Khi đó chạy lại chương trình vẫn ra kết quả như ban đầu.
+
+- Việc thiết kế, sử dụng interface và abstract class chính là cách thể hiện tính trừu tượng trong lập trình hướng đối tượng.
+
+- Lưu ý: Phải định nghĩa nội dung cho tất cả thành phần trong interface.
+
+
+3 So sánh giữa interface và lớp trừu tượng (abstract class) 
+
++ Những điểm giống nhau giữa interface và abstract class:
+
+- Đều có thể chứa phương thức thuần ảo.
+
+- Đều không thể khởi tạo đối tượng.
+
++ Những điểm khác nhau:
+
+- abstract class có thể kế thừa 1 lớp và từ nhiều interface, còn interface chỉ có thể kế thừa được nhiều interface khác. Lý do là nếu một interface kế thừa từ một lớp, thì nó sẽ phải cung cấp triển khai cho tất cả các phương thức và thuộc tính của lớp đó. Điều này sẽ làm cho interface trở nên cồng kềnh và khó sử dụng, đồng thời trái với đặc điểm của Interface đã được C# quy ước: "Interface không chứa các thuộc tính (các biến) dù là hằng số hay biến tĩnh vẫn không được.".
+
+- interface chỉ chứa các khai báo, không có phần nội dung và không thể chứa biến trong khi abstract class có thể chứa được các phương thức và thuộc tính (biến) bình thường ở bên trong.
+
+- abstract class sử dụng từ khoá override để ghi đè còn interface thì không cần.
+
+- abstract class có constructor và destructor còn interface thì không.
+
+- interface không có phạm vi truy cập, mặc định là public còn abstract class có thể khai báo phạm vi truy cập.
+
+- interface được dùng để định nghĩa 1 khuôn mẫu hay 1 quy tắc chung, tất cả những thằng kế thừa interface phải tuân theo quy tắc chung đó, abstract class dùng để định nghĩa cái cốt lõi của lớp, thành phần chung của lớp và sử dụng cho nhiều đối tượng cùng kiểu.
+
+- interface cần thời gian để tìm phương thức thực tế ứng với lớp còn abstract class thì không dẫn đến thời gian chạy của interface chậm hơn 1 chút so với abstract class.
+
+- Đối với interface, khi ta khai báo thêm 1 cái gì đó mới, ta cần phải tìm hết tất cả các lớp có thực thi interface này để định nghĩa nội dung cho phương thức mới.
+
+- Đối với abstract class, khi định nghĩa 1 phương thức mới ta hoàn toàn có thể định nghĩa nội dung phương thức là rỗng hoặc những thực thi mặc định nào đó. Vì thế, chương trình vẫn chạy bình thường.
+
+Ví dụ : 
+
+public abstract class Animal
+{
+    /* Chỉ có phần khai báo, không có phần định nghĩa => lớp con buộc phải     
+    override */
+
+    public abstract void MakeSound_1();
+
+
+    /* Đã có phần định nghĩa, tuy là phần định nghĩa rỗng nhưng lớp con 
+    không nhất thiết phải override */
+
+    public abstract void MakeSound_2()
+    {
+
+    }
+
+
+    /* Đã có phần định nghĩa nên lớp con không nhất thiết phải override */
+
+    public abstract void MakeSound_3()
+    {
+	Console.WriteLine("Animal is making sound. . .");
+    }
+
+
+    /* Không phải phương thức thuần ảo nên lớp con cũng không nhất thiết  
+    phải override */
+
+    public void MakeSound_4()
+    {
+	Console.WriteLine("Animal is making sound. . .");
+    }
+}
+
+
+
+
+
+
+

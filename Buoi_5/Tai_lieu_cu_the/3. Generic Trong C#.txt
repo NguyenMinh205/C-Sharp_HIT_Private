@@ -1,0 +1,145 @@
+7.3 Generic Trong C#
+
+1 Generic(Kiểu tổng quát) là gì?
+
+- Nếu bạn đã từng học C++ thì chắc hẳn bạn đã từng biết tới khái niệm Template (hay còn gọi là khuôn mẫu).
+
+- Template được dùng để tạo ra các lớp, các hàm mà không cần quan tâm đến đối số kiểu dữ liệu là gì. Template được đưa ra với mục đích tăng tính tái sử dụng mã nguồn.
+
+- Tượng tự Template của C++, Generic trong C# cho phép bạn định nghĩa một hàm, một lớp mà không cần chỉ ra đối số kiểu dữ liệu là gì. Tuỳ vào kiểu dữ liệu mà người dùng truyền vào thì nó sẽ hoạt động theo kiểu dữ liệu đó.
+
+Ví dụ: Hoán đổi giá trị 2 số nguyên ta sẽ viết như sau:
+
+public static void Swap(ref int a, ref int b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+- Mọi thứ đều hoạt động tốt cho đến khi bạn hoán đổi 2 số thực. Khi đó ta phải viết lại 1 hàm Swap mới với kiểu dữ liệu của tham số truyền vào là kiểu số thực.
+
+- Mặc dù thao tác giống nhau nhưng ta phải viết hàm này 2 lần. Chính vì vậy mà Generic ra đời để giúp chúng ta giảm thiểu việc code và tăng tính tái sử dụng.
+
+- Nếu sử dụng Generic ta sẽ viết như sau:
+
+public static void Swap<T>(ref T a, ref T b)
+{
+    T temp = a;
+    a = b;
+    b = temp;
+}
+
+- Bạn chỉ cần đặt 1 chữ cái nào đó thay cho kiểu dữ liệu và khi gọi hàm bạn chỉ ra kiểu dữ liệu bạn đang thao tác là gì. Ví dụ:
+
+int a = 5, b = 7;
+double c = 1.2, d = 5.6;
+
+Swap<int>(ref a, ref b);
+Swap<double>(ref c, ref d);
+
+- Khi bạn gọi cú pháp bên dưới thì hàm Swap sẽ chạy và thay ký tự T thành kiểu dữ liệu int tương ứng.
+
+Swap<int>(ref a, ref b)
+
+- Phía trên mình vừa giới thiệu về Generic cho phương thức. Tiếp theo là Generic cho lớp cũng tương tự.
+
+Ví dụ:
+
+public class MyGeneric<T>
+{
+    private T[] items;
+
+    public T[] Items
+    {
+        get { return items; }
+    }
+
+    public MyGeneric(int Size)
+    {
+        items = new T[Size];
+    }
+
+    public T GetByIndex(int Index)
+    {
+        /* Nếu index vượt ra khỏi chỉ số phần tử của mảng thì ném ra ngoại 	lệ */
+        if (Index < 0 || Index >= items.Length)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        else
+        {
+            return items[Index];
+        }
+    }
+
+    public void SetItemValue(int Index, T Value)
+    {
+        if (Index < 0 || Index >= items.Length)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        else
+        {
+            items[Index] = Value;
+        }
+    }
+}
+
+- Bạn cứ tưởng tượng bình thường bạn viết một lớp cho kiểu int, long, double gì đó thì giờ thay nó bằng T còn lại thao tác như bình thường.
+
+- Đến khi sử dụng thì ta truyền kiểu dữ liệu thích hợp vào. Ví dụ:
+
+// Khởi tạo 1 mảng số nguyên int có 5 phần tử với class MyGeneric<T>
+MyGeneric<int> G = new MyGeneric<int>(5);
+
+G.SetItemValue(0, 10);
+
+- Khi bạn khai báo cú pháp bên dưới thì trình biên dịch sẽ hiểu T trong lớp MyGeneric là kiểu int và thay thế toàn bộ chữ cái T trong lớp thành int sau đó thực thi.
+
+
++ Đặc điểm của Generic :
+
+- Giúp định nghĩa một thao tác dữ liệu với kiểu dữ liệu chung nhất nhìn hạn chế viết code và tái sử dụng.
+
+- Ứng dụng phổ biến nhất của Generic là tạo ra các Generic Collections.
+
+- Ở những bài học trước ta đã tìm hiểu các Collections phổ biến thì nếu các bạn để ý thì giá trị lưu trữ bên trong đều là object.
+
+- Điều này gây rất nhiều khó khăn nếu như ta muốn quản lý 1 danh sách có cùng kiểu. Vì object có thể chứa được mọi kiểu dữ liệu nên ta khó kiểm soát rằng việc thêm phần tử có phải cùng kiểu dữ liệu ta mong muốn hay không.
+
+- Từ đó Generic Collections ra đời để giúp ta vừa có thể sử dụng được các Collections vừa có thể hạn chế lỗi xảy ra trong quá trình thực thi.
+
+- Ngoài ra, Generic còn giúp kiểm soát kiểu dữ liệu một cách chặt chẽ, và nếu không truyền đúng kiểu dữ liệu được mong đợi, chương trình có thể bị lỗi hoặc không biên dịch được.
+
+
+2 Một số loại Generic Collections thông dụng
+
+- Các Generic Collections đều được xây dựng bắt nguồn từ 1 Collections nào đó có sẵn. Vì thế với mỗi Collections đã học sẽ có một Generic tương ứng.
+
++ Một số Generic Collections được sử dụng phổ biến :
+
+- List<T> : Là một Collections giúp lưu trữ các phần tử liên tiếp (giống mảng) nhưng có khả năng tự mở rộng kích thước. 
+
+- Dictionary<Tkey, TValue> : Lớp lưu trữ dữ liệu dưới dạng cặp Key – Value. Khi đó ta sẽ truy xuất các phần tử trong danh sách này thông qua Key (thay vì thông qua chỉ số phần tử như mảng bình thường).
+
+- SortedDictionary<Tkey, TValue> : Là sự kêt hợp của List và Dictionary. Tức là dữ liệu sẽ lưu dưới dạng Key – Value. Ta có thể truy xuất các phần tử trong danh sách thông qua Key hoặc thông qua chỉ số phần tử. Đặc biệt là các phần tử trong danh sách này luôn được sắp xếp theo giá trị của Key. Generic Collections này là sự thay thế cho SortedList đã học.
+
+- Stack<T> : Lớp cho phép lưu trữ và thao tác dữ liệu theo cấu trúc LIFO (Last In First Out). 
+
+- Queue<T> : Lớp cho phép lưu trữ và thao tác dữ liệu theo cấu trúc FIFO (First In First Out).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

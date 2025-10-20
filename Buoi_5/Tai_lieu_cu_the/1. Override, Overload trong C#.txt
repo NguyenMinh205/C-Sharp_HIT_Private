@@ -1,0 +1,134 @@
+1. Method Overloading (Nạp chồng phương thức)
+- Khái niệm: Overloading là một kĩ thuật cho phép trong cùng một class có thể có nhiều phương thức cùng tên nhưng khác nhau về số lượng tham số hoặc kiểu dữ liệu tham số. 
+Nó giúp ta thực hiện một hành động chung theo nhiều cách khác nhau, mà không cần tạo ra nhiều tên hàm riêng biệt.
+→ Đây là đa hình ở thời điểm biên dịch (Compile-time Polymorphism).
+
+Ví dụ chúng ta có hàm TanCong dùng để sử dụng kiếm đánh kẻ địch. Khi muốn tấn công bằng súng hoặc giáo không lẽ tôi lại phải viết một hàm với tên khác(chẳng hạn TanCongSung) và code lại phần core về tấn công hay sao? 
+Như vậy thì code sẽ trở nên phức tạp hơn trong khi hai hàm có cùng một mục đích là tấn công. Như vậy chúng ta sẽ overload hàm tấn công như sau:
+
+public class Player
+{
+    // Tấn công bằng tay (mặc định)
+    public void TanCong()
+    {
+        Console.WriteLine("Tấn công tay: 10 sát thương");
+    }
+
+    // Tấn công với vũ khí melee (ví dụ: kiếm, giáo)
+    public void TanCong(string tenVuKhi)
+    {
+        Console.WriteLine($"Tấn công bằng {tenVuKhi}: sát thương tùy theo vũ khí");
+    }
+
+    // Tấn công với vũ khí có tầm bắn (súng) và số đạn tiêu thụ
+    public void TanCong(string tenVuKhi, int soDan)
+    {
+        Console.WriteLine($"Bắn bằng {tenVuKhi} với {soDan} viên đạn");
+    }
+
+    // Tấn công với vị trí mục tiêu ở xa(tầm đánh) — khác kiểu tham số
+    public void TanCong(float tamDanh, float huong)
+    {
+        Console.WriteLine($"Tấn công tầm xa: tầm đánh {tamDanh}, hướng {huong}");
+    }
+}
+
+// Sử dụng
+var p = new Player();
+p.TanCong();                       // gọi overload không tham số
+p.TanCong("Kiem");                 // gọi overload 1 tham số
+p.TanCong("Sung", 3);              // gọi overload 2 tham số
+p.TanCong(12.5f, 90f);             // gọi overload với tọa độ/ hướng
+
+- Quy tắc
++ Các phương thức phải: Cùng tên và khác danh sách tham số (số lượng, kiểu, hoặc thứ tự)
++ Không thể chỉ khác kiểu trả về.
++ Có thể khác tham số mặc định, nhưng tránh mơ hồ.
+
+- Khi nào dùng?
++ Các hàm có cùng hành động, nhiều dạng đầu vào
++ Tránh tạo nhiều tên phương thức rời rạc làm khó nhớ.
+
+2) Method Overriding (Ghi đè phương thức)
+- Khái niệm: là cơ chế cho phép lớp con ghi đè (thay đổi) cách hoạt động của phương thức được định nghĩa ở lớp cha.
+→ Đây là đa hình ở thời điểm thực thi (Runtime Polymorphism).
+
+- Từ khóa liên quan
++ virtual: khai báo ở lớp cha → cho phép lớp con ghi đè.
++ override: lớp con ghi đè đúng chữ ký.
++ abstract: buộc lớp con phải override (không có thân hàm ở lớp cha).
++ sealed: chặn ghi đè tiếp.
++ new: che khuất (hiding) chứ không override.
+
+Giả sử ta có lớp trừu tượng Weapon (vũ khí), và các lớp con như Sword, Gun, Spear sẽ override hành vi TanCong() theo cách riêng.
+
+// Lớp cha trừu tượng
+public abstract class Weapon
+{
+    public string Name { get; }
+
+    public Weapon(string name)
+    {
+        Name = name;
+    }
+
+    // Hành động tấn công (chưa có phần thân)
+    public abstract void TanCong();
+}
+
+// Lớp con cụ thể — Kiếm
+public class Sword : Weapon
+{
+    public Sword() : base("Kiếm") { }
+
+    public override void TanCong()
+    {
+        Console.WriteLine("Vung kiếm chém, gây 25 sát thương!");
+    }
+}
+
+// Lớp con cụ thể — Súng
+public class Gun : Weapon
+{
+    public Gun() : base("Súng") { }
+
+    public override void TanCong()
+    {
+        Console.WriteLine("Bắn đạn tầm xa, gây 20 sát thương!");
+    }
+}
+
+// Lớp con cụ thể — Giáo
+public class Spear : Weapon
+{
+    public Spear() : base("Giáo") { }
+
+    public override void TanCong()
+    {
+        Console.WriteLine("Đâm giáo xuyên giáp, gây 30 sát thương!");
+    }
+}
+
+// Sử dụng
+List<Weapon> danhSachVuKhi = new List<Weapon>
+{
+    new Sword(),
+    new Gun(),
+    new Spear()
+};
+
+foreach (Weapon vk in danhSachVuKhi)
+{
+    vk.TanCong(); // Đa hình runtime: hành vi phụ thuộc vào loại vũ khí
+}
+
+
+- Khi nào dùng?
++ Khi có hệ thống kế thừa: lớp cha mô tả “hành vi chung”, lớp con triển khai chi tiết riêng.
++ Khi muốn thay đổi logic cho từng đối tượng cụ thể (Enemy, Weapon, Skill...).
++ Dễ mở rộng và bảo trì (tuân thủ nguyên tắc OCP trong SOLID).
+
+- Checklist an toàn khi dùng Overriding
++ Ghi đè đúng chữ ký (tham số và kiểu trả về).
++ Gọi base.Method() khi chỉ muốn mở rộng hành vi, không thay thế toàn bộ.
++ Dùng sealed override khi muốn ngăn ghi đè tiếp (ví dụ: lớp BossEnemy không cho kế thừa thêm).

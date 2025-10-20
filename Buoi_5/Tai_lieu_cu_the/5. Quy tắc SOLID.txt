@@ -1,0 +1,276 @@
+Nguyên tắc SOLID trong Lập trình Hướng đối tượng
+
+SOLID là 5 nguyên tắc nền tảng trong thiết kế phần mềm hướng đối tượng (OOP), giúp code dễ hiểu, dễ mở rộng và dễ bảo trì.
+
+Từ viết tắt gồm:
+S – Single Responsibility Principle
+O – Open/Closed Principle
+L – Liskov Substitution Principle
+I – Interface Segregation Principle
+D – Dependency Inversion Principle
+
+1. Single Responsibility Principle (SRP): Nguyên tắc trách nhiệm đơn (một lý do thay đổi)
+- Định nghĩa
+Mỗi class chỉ nên có một trách nhiệm duy nhất – tức là một lý do để thay đổi.
+Nếu một class làm quá nhiều việc (ví dụ: xử lý logic, hiển thị, lưu file...), nó sẽ khó bảo trì và dễ sinh lỗi khi chỉnh sửa.
+
+- Ví dụ trong game
+
+Giả sử ta có lớp EnemyManager làm quá nhiều thứ:
+- Sinh kẻ địch
+- Tính sát thương
+- Cập nhật UI hiển thị số lượng
+
+→ Khi thay đổi logic hiển thị, code gameplay cũng dễ bị ảnh hưởng → vi phạm SRP.
+
+// Vi phạm SRP
+public class EnemyManager
+{
+    public void SpawnEnemy() { /* ... */ }
+    public void TakeDamage() { /* ... */ }
+    public void UpdateEnemyUI() { /* ... */ }  // Không nên để chung
+}
+
+
+--> Refactor: tách nhỏ theo từng trách nhiệm
+
+// Tuân thủ SRP
+public class EnemySpawner
+{
+    public void SpawnEnemy() { /* Sinh kẻ địch */ }
+}
+
+public class EnemyHealth
+{
+    public void TakeDamage(int dmg) { /* Giảm HP */ }
+}
+
+public class EnemyUI
+{
+    public void UpdateUI(int remaining) { /* Cập nhật UI */ }
+}
+
+
+- Giờ mỗi class có “một lý do duy nhất để thay đổi”:
+- Nếu thay đổi giao diện → chỉ sửa EnemyUI.
+- Nếu thêm logic máu → chỉ sửa EnemyHealth.
+
+2. Open/Closed Principle (OCP): Nguyên tắc Mở/Đóng
+
+- Định nghĩa
+Class nên mở để mở rộng, nhưng đóng với chỉnh sửa.
+Tức là: ta thêm tính năng mới bằng cách mở rộng, không sửa mã nguồn gốc — nhờ vào kế thừa, interface, hoặc composition.
+
+- Ví dụ trong game
+
+Ta có lớp Enemy và ta muốn mỗi loại có hành vi tấn công riêng.
+
+// Vi phạm OCP (phải sửa code cũ mỗi lần thêm loại kẻ địch)
+public class Enemy
+{
+    public void Attack(string type)
+    {
+        if (type == "Goblin") Console.WriteLine("Goblin đánh gậy!");
+        else if (type == "Orc") Console.WriteLine("Orc vung rìu!");
+        else if (type == "Slime") Console.WriteLine("Slime nổ tung!");
+    }
+}
+
+
+--> Tuân thủ OCP: Dùng kế thừa + override để mở rộng.
+
+// Đóng với chỉnh sửa, mở để mở rộng
+public abstract class Enemy
+{
+    public abstract void Attack();
+}
+
+public class Goblin : Enemy
+{
+    public override void Attack() => Console.WriteLine("Goblin đánh gậy!");
+}
+
+public class Orc : Enemy
+{
+    public override void Attack() => Console.WriteLine("Orc vung rìu!");
+}
+
+public class Slime : Enemy
+{
+    public override void Attack() => Console.WriteLine("Slime nổ tung!");
+}
+
+
+Giờ muốn thêm Boss mới, chỉ cần:
+
+public class Boss : Enemy
+{
+    public override void Attack() => Console.WriteLine("Boss phóng cầu lửa!");
+}
+
+
+- Không cần sửa bất kỳ dòng nào trong Enemy gốc. Đó chính là OCP.
+
+3. Liskov Substitution Principle (LSP): Nguyên tắc thay thế Liskov
+- Định nghĩa
+Các lớp con phải có thể thay thế lớp cha mà không làm thay đổi tính đúng đắn của chương trình.
+Nếu class con phá vỡ logic của class cha (ví dụ: thay đổi ý nghĩa tham số, hoặc không thực hiện đúng hợp đồng), là vi phạm LSP.
+
+- Ví dụ trong game
+// Vi phạm LSP
+public class Enemy
+{
+    public virtual void TakeDamage(int dmg)
+    {
+        Console.WriteLine($"Enemy mất {dmg} máu");
+    }
+}
+
+public class Boss : Enemy
+{
+    public override void TakeDamage(int dmg)
+    {
+        // Boss "từ chối" nhận sát thương => phá vỡ kỳ vọng
+        throw new Exception("Boss không thể bị đánh!");
+    }
+}
+
+
+Nếu GameManager gọi TakeDamage() cho mọi Enemy,
+mà Boss lại ném lỗi → game crash → vi phạm LSP.
+
+--> Cách sửa đúng:
+
+// Tuân thủ LSP
+public class Boss : Enemy
+{
+    public override void TakeDamage(int dmg)
+    {
+        Console.WriteLine($"Boss mất {dmg / 2} máu (kháng 50%)");
+    }
+}
+
+
+Giờ Boss vẫn thay thế được Enemy,
+nhưng chỉ thay đổi hành vi một cách hợp lý, không phá vỡ hệ thống.
+
+4. Interface Segregation Principle (ISP)
+
+Nguyên tắc phân tách giao diện
+
+- Định nghĩa
+
+Không nên ép một class phải triển khai những phương thức mà nó không cần.
+Thay vào đó, hãy chia interface lớn thành nhiều interface nhỏ, chuyên biệt.
+
+- Ví dụ trong game
+// Interface quá to
+public interface IEnemy
+{
+    void Attack();
+    void Fly();
+    void Swim();
+}
+
+
+→ Nếu ta có Zombie chỉ biết đi bộ, vẫn phải implement Fly() và Swim() → vô nghĩa.
+
+--> Cách tốt hơn:
+
+// Tách nhỏ interface
+public interface IAttackable { void Attack(); }
+public interface IFlyable { void Fly(); }
+public interface ISwimmable { void Swim(); }
+
+public class Zombie : IAttackable
+{
+    public void Attack() => Console.WriteLine("Zombie cắn!");
+}
+
+public class Bat : IAttackable, IFlyable
+{
+    public void Attack() => Console.WriteLine("Dơi cào!");
+    public void Fly() => Console.WriteLine("Dơi bay!");
+}
+
+
+→ Mỗi class chỉ triển khai hành vi phù hợp → đúng với ISP.
+
+5. Dependency Inversion Principle (DIP)
+
+Nguyên tắc đảo ngược phụ thuộc
+
+- Định nghĩa
+
+Các module cấp cao không nên phụ thuộc vào các module cấp thấp.
+Cả hai nên phụ thuộc vào abstraction (interface).
+
+Điều này giúp thay thế hoặc mở rộng dễ dàng mà không phải chỉnh sửa logic chính.
+
+- Ví dụ trong game
+
+Giả sử bạn có Player bắn đạn, nhưng hiện tại chỉ bắn bằng Gun.
+
+// Vi phạm DIP: Player phụ thuộc trực tiếp vào Gun
+public class Gun
+{
+    public void Shoot() => Console.WriteLine("Bắn đạn!");
+}
+
+public class Player
+{
+    private Gun gun = new Gun();
+
+    public void Attack()
+    {
+        gun.Shoot();
+    }
+}
+
+
+--> Nếu sau này có thêm LaserGun hoặc RocketLauncher, phải sửa code trong Player.
+
+--> Tuân thủ DIP: Dùng interface làm lớp trung gian trừu tượng.
+
+// Giải pháp theo DIP
+public interface IWeapon
+{
+    void Attack();
+}
+
+public class Gun : IWeapon
+{
+    public void Attack() => Console.WriteLine("Bắn súng!");
+}
+
+public class LaserGun : IWeapon
+{
+    public void Attack() => Console.WriteLine("Bắn laser!");
+}
+
+public class Player
+{
+    private readonly IWeapon weapon;
+
+    public Player(IWeapon weapon)
+    {
+        this.weapon = weapon;
+    }
+
+    public void Attack()
+    {
+        weapon.Attack();
+    }
+}
+
+// Sử dụng
+var p1 = new Player(new Gun());
+var p2 = new Player(new LaserGun());
+
+p1.Attack(); // Bắn súng!
+p2.Attack(); // Bắn laser!
+
+
+→ Giờ Player chỉ biết rằng mình có thể “tấn công” thông qua IWeapon.
+Không cần biết cụ thể là Gun, LaserGun, hay Bow.
+→ Dễ mở rộng, dễ test, đúng chuẩn DIP + OCP.
