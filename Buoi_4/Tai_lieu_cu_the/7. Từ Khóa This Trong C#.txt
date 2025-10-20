@@ -1,0 +1,119 @@
+7. Từ Khoá this Trong C#
+- Trong C#, this là một từ khóa đặc biệt đại diện cho chính đối tượng hiện tại của lớp đang được thực thi.
+- Nói cách khác, this giúp ta tham chiếu đến đối tượng đang gọi phương thức hoặc truy cập thuộc tính.
+--> Mỗi khi bạn khởi tạo một đối tượng từ một lớp, this bên trong lớp đó sẽ trỏ đến chính đối tượng đó.
+
+Ví dụ
+class Student
+{
+    private string name;
+    private int age;
+
+    public Student(string name, int age)
+    {
+        this.name = name; // this tham chiếu đến đối tượng hiện tại
+        this.age = age;
+    }
+
+    public void ShowInfo()
+    {
+        Console.WriteLine("Tên: " + this.name + ", Tuổi: " + this.age);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student s1 = new Student("Mạnh", 20);
+        s1.ShowInfo();  // In ra: Tên: Mạnh, Tuổi: 20
+    }
+}
+
+Trong ví dụ trên, this.name và this.age giúp phân biệt giữa biến thành viên (thuộc tính của lớp) và biến cục bộ (tham số truyền vào hàm).
+
+2 Ý nghĩa và công dụng
+- Phân biệt biến cục bộ và thuộc tính cùng tên
++ Khi trong phương thức hoặc constructor có tham số trùng tên với thuộc tính, this giúp chỉ rõ rằng ta đang truy cập thuộc tính của lớp, không phải biến cục bộ.
+
+Ví dụ
+public void SetName(string name)
+{
+    this.name = name;  // name bên trái là thuộc tính, name bên phải là tham số
+}
+
+- Truy cập thành viên của đối tượng hiện tại
++ Khi cần gọi phương thức hoặc property khác trong cùng lớp, bạn có thể dùng this để thể hiện rõ ý định.
+
+Ví dụ
+public void Introduce()
+{
+    this.ShowInfo(); // tương đương gọi trực tiếp ShowInfo();
+}
+
+- Truyền đối tượng hiện tại cho phương thức khác
++ this có thể được truyền như một tham số cho phương thức khác, khi bạn muốn cung cấp đối tượng hiện tại cho một lớp hoặc hàm khác.
+
+Ví dụ
+public class Student
+{
+    public void Print()
+    {
+        Console.WriteLine("This is the current student object");
+    }
+
+    public void PassThis(Student another)
+    {
+        another.ReceiveStudent(this); // truyền chính đối tượng hiện tại
+    }
+
+    public void ReceiveStudent(Student s)
+    {
+        Console.WriteLine("Đã nhận đối tượng khác");
+    }
+}
+
+- Gọi constructor khác trong cùng lớp
++ C# cho phép constructor này gọi constructor khác trong cùng lớp bằng từ khóa this().
+
+Ví dụ
+class Rectangle
+{
+    private int width;
+    private int height;
+
+    // Constructor 1
+    public Rectangle()
+    {
+        this.width = 10;
+        this.height = 5;
+    }
+
+    // Constructor 2
+    public Rectangle(int w) : this() // Gọi constructor mặc định
+    {
+        this.width = w;
+    }
+
+    public void Show()
+    {
+        Console.WriteLine("Chiều rộng: " + width + ", Chiều cao: " + height);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Rectangle r = new Rectangle(20);
+        r.Show(); // Chiều rộng: 20, Chiều cao: 5
+    }
+}
+
+
+- Ở đây, this() gọi constructor không tham số trước khi tiếp tục thực thi constructor hiện tại.
+
+3 Một số lưu ý
+- Không thể dùng this trong phương thức static, vì static không thuộc về đối tượng cụ thể nào, nên không có “đối tượng hiện tại” để tham chiếu.
+- this chỉ có thể dùng bên trong lớp (hoặc struct), không thể gọi từ bên ngoài.
+- Việc dùng this là không bắt buộc trong các tình huống không gây nhầm lẫn, nhưng khuyến khích sử dụng để code rõ ràng hơn, đặc biệt khi tham số trùng tên.

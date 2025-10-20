@@ -1,0 +1,184 @@
+6.5 Tính Đa Hình Trong OOP C#
+
+1 Khái niệm tính đa hình
+
+- Tính đa hình là hiện tượng các đối tượng thuộc các lớp khác nhau có thể hiểu cùng 1 thông điệp theo các cách khác nhau.
+
+- Một ví dụ về đa hình trong thực tế. Ta có 3 con vật: chó, mèo, lợn. Cả 3 con vật này đều là động vật. Nhưng khi ta bảo cả 3 động vật kêu thì con chó sẽ kêu gâu gâu, con mèo sẽ kêu meo meo và con heo sẽ kêu ét ét.
+
+- Trong ví dụ trên 3 con vật: chó, mèo, lợn xem như là các đối tượng. Việc ta bảo 3 động vật kêu chính là thông điệp. Rõ ràng cả 3 con vật có thể hiểu cùng 1 thông điệp là kêu theo các cách khác nhau.
+
++ Để thể hiện được tính đa hình:
+
+- Các lớp phải có quan hệ kế thừa với cùng 1 lớp cha nào đó.
+
+- Phương thức đa hình phải được ghi đè (override) ở các lớp con (sẽ được trình bày ngay sau đây).
+
++ Từ khoá virtual và từ khoá override :
+
+- Virtual là từ khoá dùng để khai báo 1 phương thức ảo (phương thức ảo là phương thức có thể ghi đè được).
+
+- Override là từ khoá dùng để đánh dấu phương thức ghi đè lên phương thức của lớp cha.
+
++ Lưu ý :
+
+- Chỉ có thể ghi đè lên phương thức virtual hoặc abstract (sẽ trình bày ngay sau đây).
+
+- Tính đa hình chỉ được thể hiện khi đã ghi đè lên phương thức của lớp cha.
+
+Ví dụ minh hoạ:
+
+- Ta có 3 lớp Animal, Cat, Dog. Trong đó Cat và Dog kề thừa từ lớp Animal. Trong các lớp đều có phương thức Speak().
+
+class Animal
+{
+    public void Speak()
+    {
+        Console.WriteLine("Animal is speaking. . .");
+    }
+}
+
+class Cat : Animal
+{
+    public void Speak()
+    {
+        Console.WriteLine("Cat is speaking. . .");
+    }
+}
+
+class Dog : Animal
+{
+    public void Speak()
+    {
+        Console.WriteLine("Dog is speaking. . .");
+    }
+}
+
+Ta có đoạn chương trình trong hàm main như thế này:
+
+Animal cat = new Cat();
+Animal dog = new Dog();
+cat.Speak();
+dog.Speak();
+
++ Ta mong muốn chương trình sẽ gọi đúng phương thức Speak() của lớp đã được cấp phát vùng nhớ. Nhưng thực tế không phải vậy. Lý do là bởi vì khi ta khởi tạo Animal cat = new Cat() thì bản chất là ta đang thực hiện các công việc sau: 
+
+- Khai báo biến có kiểu dữ liệu là Animal và đặt tên là cat. Điều này có nghĩa là biến cat có thể tham chiếu đến một đối tượng thuộc lớp Animal hoặc bất kỳ lớp con nào của Animal.
+
+- Gán giá trị cho biến cat = new Cat(); Tuy kiểu của biến cat là Animal, nhưng vì Cat là lớp con của Animal (tức là nó được phép coi như là 1 Animal), nên có thể gán một đối tượng Cat cho biến cat. Mặc dù đã gán đối tượng Cat cho biến cat, nhưng thực chất là ta đang chỉ gán phần Animal của đối tượng Cat cho biến cat và nó chỉ có thể sử dụng các thuộc tính và phương thức của lớp Animal thôi. Bất kỳ phương thức hay thuộc tính nào thuộc về lớp Cat mà không có trong lớp Animal sẽ không thể truy cập trực tiếp thông qua biến cat. 
+
+=> Lúc này ta cần phải override phương thức Speak() của lớp cha (lớp Animal) và để override được thì ta cần khai báo phương thức Speak() của lớp cha là phương thức ảo (virtual).
+
+class Animal
+{
+    public virtual void Speak()
+    {
+        Console.WriteLine(" Animal is speaking. . .");
+    }
+}
+
+class Cat : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Cat is speaking. . .");
+    }
+}
+
+class Dog : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Dog is speaking. . .");
+    }
+}
+
+- Đây cũng chính là ví dụ sử dụng tính đa hình.
+
+- Ta thấy 2 đối tượng dog, cat được cấp phát 2 vùng nhớ thuộc 2 lớp 2 khác nhau nhưng khi cùng gọi phương thức Speak() thì đối tượng tham chiếu đến vùng nhớ của lớp nào sẽ được gọi đúng phương thức của lớp đó.
+
+2 Lớp trừu tượng và phương thức thuần ảo
+
+- Phương thức thuần ảo là 1 phương thức ảo và không có định nghĩa bên trong.
+
+- Lớp trừu tượng là lớp chứa phương thức thuần ảo.
+
+- Abstract là từ khoá dùng để khai báo 1 lớp trừu tượng hoặc 1 phương thức thuần ảo.
+
+- Xét lại ví dụ trên, Ở đây ta xem lại phương thức Speak() của lớp Animal ta nhận thấy phần định nghĩa của phương thức này chỉ là hình thức sau đó cũng sẽ bị các lớp kế thừa ghi đè lên.
+
+- Việc định nghĩa nội dung phương thức không có tác dụng gì vậy tại sao ta lại phải định nghĩa chúng?
+
++ Câu trả lời đã được C# giải đáp qua từ khoá abstract. Ở đây ta sử dụng abstract để nhấn mạnh 2 điều:
+
+- Phương thức Speak() có thể ghi đè (override).
+
+- Phương thức Speak() không có định nghĩa gì bên trong.
+
+- Để khai báo lớp trừu tượng và phương thức thuần ảo ta chỉ cần thêm khoá abstract vào trước tên lớp và tên phương thức.
+
+abstract class Animal
+{
+    /* Khai báo phương thức thuần ảo nên không cần định nghĩa nội dung cho 
+    phương thức */
+
+    public abstract void Speak();
+}
+
+class Cat : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Cat is speaking. . .");
+    }
+}
+
+class Dog : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Dog is speaking. . .");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Animal cat = new Cat();
+        Animal dog = new Dog();
+        cat.Speak();  // Xuất: Cat is speaking. . .
+        dog.Speak();  // Xuất: Dog is speaking. . .
+    }
+}
+
+Trong đoạn code trên: 
+
+- Lớp Animal được đặt là abstract, và phương thức Speak được khai báo là abstract => lớp con kế thừa lớp Animal bắt buộc phải triển khai phương thức này.
+
+- Trong lớp Cat và Dog, ta sử dụng từ khóa override để chỉ ra rằng chúng ta đang ghi đè phương thức Speak từ lớp Animal.
+
+Trong hàm Main, khi ta tạo đối tượng Cat và Dog thông qua lớp Animal, C# sẽ gọi phương thức Speak tương ứng với lớp thực tế của đối tượng chạy (runtime type).
+
++ Lưu ý :
+
+- Khi kế thừa 1 lớp trừu tượng bạn bắt buộc phải override tất cả các phương thức thuần ảo nhằm đảm bảo tính hợp lệ cho chương trình.
+
+- Lớp trừu tượng có thể chứa cả phương thức thuần ảo và phương thức thông thường. Khi 1 lớp kế thừa từ lớp trừu tượng, nó phải override tất cả các phương thức thuần ảo, nhưng không nhất thiết phải override các phương thức thông thường nếu không cần thiết, chúng có thể sử dụng luôn phương thức đó ở lớp trừu tượng mà không cần định nghĩa lại (Nếu cần thì mới override lại, khi được gọi sẽ dùng phương thức override đó, còn không cần thì dùng luôn của lớp cha).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

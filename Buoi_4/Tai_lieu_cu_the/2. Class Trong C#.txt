@@ -1,0 +1,273 @@
+6.2 Class Trong C#
+
+1 Class trong C# là gì?
+
+- Class trong C# chính là cách thể hiện khái niệm về lớp trong lập trình hướng đối tượng.
+
++ Một class trong C# có các thành phần như:
+
+- Thuộc tính(Properties): là các thành phần dữ liệu hay còn gọi là các biến.
+
+- Phương thức(Methods): là các hàm thành phần thể hiện các hành vi của một đối tượng thuộc lớp.
+
+- Phương thức khởi tạo(Constructor).
+
+- Phương thức huỷ bỏ(Destructor).
+
+- Class trong C# thực chất là một kiểu dữ liệu mới do người dùng tự định nghĩa.
+
+2 Khai báo, khởi tạo và sử dụng class trong C#
+
+2.1 Khai báo class trong C#
+
++ Cú pháp:
+
+class <tên lớp>
+{
+    <Phạm vi truy cập> <Các thành phần của lớp>;
+}
+
++ Trong đó:
+
+- <tên lớp> là tên do người dùng đặt và tuân theo quy tắc đặt tên.
+
+- <Phạm vi truy cập> bao gồm các từ khoá như public, protected, private, static, . . .
+
+- <Các thành phần của lớp> bao gồm các biến, phương thức của lớp.
+
+- Các biến được khai báo như khai báo biến bình thường.
+
+- Các phương thức (hàm) được khai báo như khai báo hàm.
+
+Ví dụ:
+
+class Animal
+{
+    public double Weight;
+    public double Height;
+
+    public void Run()
+    {
+        Console.WriteLine(" Animal is running. . .");
+    }
+}
+
+
+- Với khai báo trên ta đã có 1 kiểu dữ liệu mới tên là Animal. Và ta hoàn toàn có thể khai báo biến và sử dụng nó.
+
+- Từ khoá public là chỉ phạm vi truy cập của các thành phần bên trong class.
+
+- Lớp Animal có 2 thuộc tính là Weight, Height và 1 phương thức là Run. Như vậy mọi đối tượng thuộc lớp này đều có 3 thành phần trên.
+
+- Nếu để ý ta sẽ nhận ra rằng mọi phương thức có sẵn trong C# đều được nằm trong lớp nào đó (khác hoàn toàn với phong cách lập trình hướng thủ tục – phương thức độc lập với dữ liệu). Điều này có thể giải thích là do C# là ngôn ngữ thuần hướng đối tượng nên mọi thứ bên trong nó đều theo phong cách lập trình hương đối tượng.
+
+2.2 Khởi tạo:
+
+- Khởi tạo 1 đối tượng thuộc lớp thông qua toán tử new.
+
+Ví dụ:
+
+Animal Dog = new Animal();
+
+Class là kiểu dữ liệu tham chiếu vì thế đối tượng dữ liệu thực sự được lưu trên heap.
+
+2.3 Sử dụng:
+
+- Về cơ bản thì class được sử dụng tương tự như struct.
+
++ Để gọi đến các thuộc tính bên trong lớp:
+
+- <tên đối tượng>.<tên thuộc tính>;
+
++ Để gọi đến các phương thức bên trong lớp:
+
+- <tên đối tượng>.<tên phương thức> (<danh sách tham số nếu có>);
+
+- Ở đây mình muốn tập trung vào cách bạn khai báo và sử dụng phương thức bên trong lớp như thế nào. Xét bài toán đơn giản sau: Khởi tạo các đối tượng thuộc lớp Animal lần lượt gọi phương thức in ra chiều cao và cân nặng của các loài động vật.
+
+class Animal
+{
+    public double Weight;
+    public double Height;
+
+    public void Info()
+    {
+        /* Các phương thức bên trong lớp có thể gọi đến các thành phần khác (bao gồm thuộc tính và phương thức) trong lớp đó.
+        Giá trị của các thuộc tính này có thể được khởi tạo đâu đó trong lớp hoặc từ bên ngoài truyền vào.
+        */
+
+        Console.WriteLine(" Height: " + Height + " Weight: " + Weight);
+    }
+}
+
+Trong hàm main:
+
+/*
+    Khởi tạo 2 đối tượng thuộc lớp Animal là:
+    + Dog có chiều cao 50cm và cân nặng 2kg.
+    + Cat có chiều cao 30cm và cân nặng 1kg.
+*/
+    Animal Dog = new Animal();
+    Dog.Weight = 2; // gán giá trị cho các thuộc tính của đối tượng
+    Dog.Height = 50;
+
+    Animal Cat = new Animal();
+    Cat.Weight = 1;
+    Cat.Height = 30;
+
+    Dog.Info(); // gọi phương thức của đối tượng
+    Cat.Info();
+
+- Tuỳ vào giá trị của từng đối tượng mà phương thức Info in ra đúng giá trị tương ứng của đối tượng đó.
+
+3 Phương thức khởi tạo, phương thức huỷ bỏ
+
+- Trong thế giới thực khi 1 sự vật nào đó được sinh ra thì nó sẽ mang sẵn trong mình những đặc điểm nhất định và mọi sự vật cùng loài với nó đều như vậy.
+
+- Vì lập trình hướng đối tượng là phương pháp giúp ánh xạ thế giới thực vào thế giới lập trình một cách dễ dàng nên từ đó đã xuất hiện 2 khái niệm phương thức khởi tạo và phương thức huỷ bỏ để thể hiện ý trên.
+
+3.1 Phương thức khởi tạo
+
+- Phương thức khởi tạo (Constructor) là những phương thức đặc biệt được gọi đến ngay khi khởi tạo 1 đối tượng nào đó.
+ 
++ Đặc điểm :
+
+- Có tên trùng với tên lớp.
+
+- Không có kiểu trả về.
+
+- Được tự động gọi khi 1 đối tượng thuộc lớp được khởi tạo.
+
+- Nếu như bạn không khai báo bất kỳ phương thức khởi tạo nào thì hệ thống sẽ tự tạo ra phương thức khởi tạo mặc định không đối số và không có nội dung gì.
+
+- Có thể có nhiều constructor bên trong 1 lớp.
+
++ Có 2 loại phương thức khởi tạo:
+
++ Phương thức khởi tạo không đối số:
+
+- Là phương thức khởi tạo không có bất kỳ tham số truyền vào nào.
+
+- Thường dùng để khởi tạo các giá trị mặc định cho các thuộc tính bên trong class khi khởi tạo đối tượng (giá trị mặc định này do người lập trình quyết định).
+
++ Phương thức khởi tạo có đối số:
+
+- Là phương thức khởi tạo có tham số truyền vào. Và khi khởi tạo đối tượng để phương thức này được gọi ta cần truyền đầy đủ các tham số.
+
+- Thường dùng để khởi tạo các giá trị cho các thuộc thuộc tính bên trong class khi khởi tạo đối tượng (các giá trị này do người khởi tạo đối tượng truyền vào).
+
+Ví dụ :
+
+Ta có khai báo lớp như sau:
+
+class Cat
+{
+    public double Weight;
+    public double Height;
+
+    /*
+        Constructor không có tham số
+    */
+
+    public Cat()
+    {
+        Weight = 800;
+        Height = 10;
+    }
+
+    /*
+        Constructor có tham số
+    */
+
+    public Cat(int w, int h)
+    {
+        Weight = w;
+        Height = h;
+    }
+
+    public void Info()
+    {
+        Console.WriteLine(" Height: " + Height + " Weight: " + Weight);
+    }
+}
+
+Trong hàm main:
+
+/* Khi new Cat mà không truyền tham số vào thì constructor mặc định (constructor không tham số) sẽ tự động được gọi để khởi tạo các giá trị mặc định cho các thuộc tính của đối tượng BlackCat*/
+
+Cat BlackCat = new Cat();
+
+BlackCat.Info(); // In ra thông tin Weight, Height có thực sự được khởi tạo giá trị chưa.
+
+/* Lần này ta khởi tạo đối tượng và có truyền 2 tham số như vậy constructor có tham số sẽ được gọi. Như vậy các thuộc tính Weight, Height sẽ không mang giá trị mặc định nữa mà sẽ được gán theo giá trị mà người dùng truyền vào.*/
+
+Cat WhiteCat = new Cat(1200, 30);
+
+WhiteCat.Info(); // In ra thông tin Weight, Height 
+
++ Lưu ý :
+
+- Khi 1 đối tượng được khởi tạo chỉ có 1 constructor phù hợp nhất được gọi cho dù trong lớp có nhiều constructor.
+
+- Qua ví dụ có thể thấy cách ta truyền tham số khi khởi tạo đối tượng sẽ gian tiếp ám chỉ constructor nào được gọi vì thế cần truyền đúng và truyền đủ các tham số để C# có thể gọi đúng constructor như ý muốn.
+
++ Các tham số của constructor thường sẽ mang các giá trị tương ứng cho các thuộc tính bên trong lớp vì thế nên:
+
+- Khai báo chúng có cùng kiểu dữ liệu với thuộc tính tương ứng.
+
+- Đặt tên chúng gợi nhớ đến thuộc tính tương ứng để tránh nhầm lẫn.
+
+- Không nên khai báo dư tham số sẽ dẫn đến khó hiểu cho người dùng.
+
+3.2 Phương thức huỷ bỏ
+
+- Phương thức huỷ bỏ (destructor) là phương thức đặc biệt được gọi đến trước khi 1 đối tượng bị thu hồi.
+
++ Đặc điểm :
+
+- Có tên trùng với tên lớp nhưng để phân biệt với constructor thì ta thêm dấu “~” vào trước tên lớp.
+
+- Không có kiểu trả về.
+
+- Được tự động gọi khi 1 đối tượng thuộc lớp kết thúc “vòng đời” của nó thông qua bộ thu dọn rác tự động (Garbage Collection).
+
+- Nếu không khai báo destructor thì C# sẽ tự động tạo ra 1 destructor mặc định và không có nội dung gì.
+
+- Chỉ có 1 destructor duy nhất trong 1 lớp.
+
+- Vì bộ GC của C# có cơ chế tự động phát hiện đối tượng không còn được sử dụng nữa và thực hiện thu hồi vùng nhớ của nó nên bạn không cần phải viết tường minh việc huỷ vùng nhớ của nó. Việc bạn có thể làm viết những thứ bạn muốn làm khi đối tượng bị huỷ vào đây thôi!
+
+4 So sánh giữa Struct và Class
+
+Nhìn chung struct và class có khá nhiều điểm chung nhưng class có phần mạnh hơn:
+
++ Struct là kiểu tham trị còn Class là kiểu tham chiếu. Do đó nếu 1 class là tham số truyền vào 1 hàm thì mọi thay đổi bên trong hàm sẽ tự động cập nhật ra bên ngoài cho dù không có từ khoá out hoặc ref còn struct thì không, vì: 
+
+- Đối tượng struct được lưu trữ trực tiếp trong bộ nhớ nơi nó được khai báo, không có mức độ gián đoạn giữa các đối tượng khác nhau
+
+- Đối tượng class được lưu trữ ở một vị trí được quản lý động trong bộ nhớ. Khi khởi tạo một đối tượng class, một vùng nhớ động được cấp phát để lưu trữ dữ liệu của đối tượng đó. Biến tham chiếu (reference variable) được sử dụng để giữ địa chỉ của vùng nhớ đó, chứ không phải là giá trị thực sự của đối tượng.
+
++ Trong Struct không có destructor còn trong Class thì có
+
++ Class có thể khai báo phương thức khởi tạo mặc định (không có đối) còn Struct thì không  
+
++ Struct không có khả năng kế thừa như Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

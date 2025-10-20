@@ -1,0 +1,144 @@
+6.1, Tổng Quan Về Lập Trình Hướng Đối Tượng
+
+1 Lập trình hướng đối tượng là gì?
+
++ Sự tiến hoá của các phương pháp lập trình :
+
++ Đầu tiên là lập trình không có cấu trúc (lập trình tuyến tính) : 
+
+- Là phương pháp xuất hiện đầu tiên. Phương pháp này đơn giản chỉ là viết tất cả mã lệnh vào 1 hàm main duy nhất và chạy. Ngôn ngữ sử dụng phương pháp này là Assembly (hợp ngữ).
+
++ Nhược điểm của phương pháp này:
+
+- Chỉ sử dụng biến toàn cục dẫn đến rất tốn bộ nhớ.
+
+- Vì có những đoạn chương trình cần sử dụng lại nhiều lần nên dẫn đến lạm dụng lệnh goto.
+
+- Khó hiểu, khó bảo trì, không thể tái sử dụng.
+
+- Khó phát triển các ứng dụng lớn.
+
+
++ Tiếp theo là lập trình có cấu trúc (lập trình thủ tục - hàm) :
+
+- Sau 1 thời gian tồn tại người ta dần nhận ra những nhược điểm của phương pháp trên và đưa ra giải pháp đó là chia chương trình lớn ra thành các chức năng, mỗi chức năng được đưa vào 1 hàm. Khi cần dùng đến chức năng nào thì ta sẽ gọi hàm tương ứng.
+
+- Mỗi chương trình con lại có thể chia nhỏ ra nữa.
+
+- Hầu hết các ngôn ngữ lập trình đều hỗ trợ phương pháp này.
+
++ Ưu điểm : 
+
+- Chương trình được module hoá, dễ hiểu, dễ bảo trì.
+
+- Dễ dàng tạo ra các thư viện phần mềm.
+
++ Nhược điểm :
+
+- Dữ liệu và xử lý tách rời.
+
+- Khi cấu trúc dữ liệu thay đổi sẽ dẫn đến thuật toán bị thay đổi.
+
+- Không tự động khởi tạo, giải phóng dữ liệu động.
+
+- Không mô tả được đầy đủ, trung thực hệ thống trong thực tế.
+
+
++ Tiếp theo là lập trình hướng đối tượng.
+
++ Khái niệm lập trình hướng đối tượng
+
+- Với mong muốn xây dựng một phương pháp lập trình trực quan, mô tả trung thực hệ thống trong thực tế vì thế phương pháp lập trình hướng đối tượng ra đời.
+
+- Lập trình hướng đối tượng là phương pháp lập trình lấy đối tượng làm nền tảng để xây dựng chương trình.
+
++ Một định nghĩa khác về lập trình hướng đối tượng đó là phương pháp lập trình dựa trên kiến trúc lớp (class) và đối tượng (object).
+
+
+2 Một số khái niệm cơ bản trong lập trình hướng đối tượng
+
++ Đối tượng(object) :
+
+- Trong lập trình hướng đối tượng, đối tượng được hiểu như là 1 thực thể: người, vật hoặc 1 bảng dữ liệu, . . .
+
++ Một đối tượng bao gồm 2 thông tin: thuộc tính và phương thức.
+
+- Thuộc tính chính là những thông tin, đặc điểm của đối tượng. Ví dụ: một người sẽ có họ tên, ngày sinh, màu da, kiểu tóc, . . .
+ 
+- Phương thức là những thao tác, hành động mà đối tượng đó có thể thực hiện. Ví dụ: một người sẽ có thể thực hiện hành động nói, đi, ăn, uống, . . .
+
++ Lớp(class) :
+
+- Các đối tượng có các đặc tính tương tự nhau được gom lại thành 1 lớp đối tượng.
+
+- Bên trong lớp cũng có 2 thành phần chính đó là thuộc tính và phương thức.
+
+- Ngoài ra, lớp còn được dùng để định nghĩa ra kiểu dữ liệu mới.
+
++ Sự khác nhau giữa đối tượng và lớp :
+
+- Lớp là một khuôn mẫu còn đối tượng là một thể hiện cụ thể dựa trên khuôn mẫu đó.
+
+- Để dễ hiểu hơn mình sẽ lấy một ví dụ thực tế:
+
++ Nói về con mèo thì lớp chính là loài mèo. Loài mèo có:
+
+- Các thông tin, đặc điểm như 4 chân, 2 mắt, có đuôi, có chiều cao, có cân nặng, màu lông . . .
+
+- Các hành động như: kêu meo meo, đi, ăn, ngủ, . . .
+
+- Như vậy mọi động vật thuộc loài mèo sẽ có những đặc điểm như trên.
+
+- Đối tượng chính là một con mèo cụ thể nào đó như con mèo con đang nằm dưới chân mình.
+
++ Tổng quan về lập trình hướng đối tượng :
+
+- Bạn thấy đấy khi nói đến xe ôtô thì lớp chính khuôn mẫu của cái xe với các đặc trưng như có 4 bánh và có thiết kế tương tự như hình vẽ. Đối tượng chính là các chiếc xe otô cụ thể như Toyota camry, Honda city, Ford ranger.
+
+- Sự xuất hiện của 2 khái niệm mới là lớp và đối tượng chính là đặc trưng của phương pháp lập trình hướng đối tượng. Nó đã giải quyết được các khuyết điểm của phương pháp lập trình hướng cấu trúc để lại. Ngoài ra 2 khái niệm này đã giúp biểu diễn tốt hơn thế giới thực trên máy tính.
+
+
+3 Các đặc điểm của lập trình hướng đối tượng
+
+* Lập trình hướng đối tượng có 4 đặc điểm chính:
+
++ Tính đóng gói:
+
+- Các dữ liệu và phương thức có liên quan với nhau được đóng gói thành các lớp để tiện cho việc quản lý và sử dụng.
+
+-  Ngoài ra, đóng gói còn để che giấu một số thông tin và chi tiết cài đặt nội bộ để bên ngoài không thể nhìn thấy.
+
++ Tính trừu tượng: Khi viết chương trình theo phong cách hướng đối tượng, việc thiết kế các đối tượng ta cần rút tỉa ra những đặc trưng chung của chúng rồi trừu tượng thành các interface và thiết kế xem chúng sẽ tương tác với nhau như thế nào.
+
++ Tính kế thừa: Lớp cha có thể chia sẽ dữ liệu và phương thức cho các lớp con, các lớp con khỏi phải định nghĩa lại, giúp chương trình ngắn gọn.
+
++ Tính đa hình: Là hiện tượng các đối tượng thuộc các lớp khác nhau có thể hiểu cùng một thông điệp theo các cách khác nhau. 
+
+
+4, Nguyên tắc thiết kế hướng đối tượng SOLID
+
+SOLID là tập hợp 5 nguyên tắc thiết kế hướng đối tượng giúp tạo ra mã nguồn linh hoạt, dễ bảo trì và mở rộng:
+
+- Single Responsibility Principle (Nguyên tắc đơn trách nhiệm): Một lớp chỉ đảm nhiệm 1 trách nhiệm duy nhất để khi thay đổi diễn ra thì ta chỉ thay đổi duy nhất lớp đó => Lớp đó chỉ có duy nhất 1 lý do để thay đổi. 
+
+- Open/Closed Principle (Nguyên tắc đóng mở): Một lớp nên mở để mở rộng nhưng đóng để sửa đổi. Điều này nghĩa là mở rộng chức năng (thông qua kế thừa hoặc các cách khác) của một lớp mà không cần sửa đổi mã nguồn hiện tại của nó.
+
+- Liskov Substitution Principle (Nguyên tắc thay thế Liskov): Bạn nên có thể thay thế bất kỳ đối tượng của một lớp con với đối tượng của lớp cha mà không làm thay đổi tính đúng đắn của chương trình.
+
+- Interface Segregation Principle (Nguyên tắc phân chia giao diện): Không nên buộc một lớp phải triển khai các phương thức mà nó không sử dụng. Thay vào đó, nên tạo các giao diện nhỏ, đặc trưng cho từng mục đích sử dụng cụ thể.
+
+- Dependency Inversion Principle (Nguyên tắc phản ngược sự phụ thuộc): Các module cấp cao không nên phụ thuộc vào các module cấp thấp. Thay vào đó, cả hai nên phụ thuộc vào các abstraction.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
