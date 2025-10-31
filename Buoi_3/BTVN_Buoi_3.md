@@ -39,22 +39,25 @@ Viết chương trình để đảo ngược thứ tự các ký tự trong mộ
 ---
 
 ## 🧾 **Câu 3 – Quản lý bán hàng**
+Viết chương trình C# để quản lý dữ liệu bán hàng theo mã sản phẩm. Mỗi sản phẩm có Name, Price, Quantity (số lượng bán được). Hệ thống phải hỗ trợ thao tác thêm, cập nhật, thống kê và xuất báo cáo.
+
 1. **Định nghĩa struct `Product`** gồm các trường:
    - `Name` : tên sản phẩm  
    - `Price` : giá bán  
-   - `Quantity` : số lượng bán được  
+   - `Quantity` : số lượng bán được
+   - `Category` : 
 
 2. **Tạo cấu trúc dữ liệu chính:**
  ```csharp
-Dictionary<string, Dictionary<string, Product>>
+Dictionary<string, Product>
 ```
 Trong đó:
-- Khóa ngoài (string): tên nhân viên bán hàng
-- Giá trị (Dictionary<string, Product>): danh sách sản phẩm mà nhân viên đó đã bán
-- Khóa trong (string): mã sản phẩm
+- Khóa ngoài (string): mã sản phẩm
 - Giá trị (Product): thông tin chi tiết của sản phẩm đã bán
 
 3. Viết các phương thức:
-- Thêm dữ liệu bán hàng mới. Nếu nhân viên hoặc sản phẩm đã tồn tại → cộng dồn số lượng bán
-- Tìm nhân viên bán được tổng số lượng sản phẩm nhiều nhất
-- Tính sản phẩm bán chạy nhất dựa trên tổng số lượng bán ra từ tất cả các nhân viên
+- Thêm dữ liệu sản phẩm mới. Sản phẩm đã tồn tại → cộng dồn số lượng bán
+- Trả về thông tin sản phẩm dựa theo mã sản phẩm
+- Tính sản phẩm bán chạy nhất theo số lượng bán được
+- Tính sản phẩm bán chạy nhất theo danh mục
+- Tính tổng doanh thu theo danh mục
