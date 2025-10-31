@@ -45,7 +45,7 @@ Viết chương trình C# để quản lý dữ liệu bán hàng theo mã sản
    - `Name` : tên sản phẩm  
    - `Price` : giá bán  
    - `Quantity` : số lượng bán được
-   - `Category` : 
+   - `Category` : danh mục
 
 2. **Tạo cấu trúc dữ liệu chính:**
  ```csharp
