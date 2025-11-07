@@ -23,7 +23,18 @@ Tạo lớp **CongNhan : Person** với yêu cầu sau:
 
 ### Thuộc tính thêm (private + property):
 - Mã công nhân
-- Chức vụ 
+- Chức vụ (**dùng enum ChucVu**)
+
+```csharp
+public enum ChucVu
+{
+    TruongNhom,
+    PhoNhom,
+    CongNhanBac3,
+    CongNhanBac2,
+    CongNhanBac1,
+    Khac
+}
 
 ### Phương thức:
 - **Constructor** – không đối số và có đầy đủ đối số
